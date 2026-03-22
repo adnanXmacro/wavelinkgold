@@ -184,10 +184,10 @@ button{cursor:pointer;border:none;background:none}
 ================================== */
 .card-page{padding:1.2rem}
 .full-card-wrap{perspective:1000px;margin-bottom:.9rem}
-.full-card{width:100%;aspect-ratio:1.586;border-radius:20px;position:relative;overflow:hidden;cursor:pointer;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.16,1,.3,1);box-shadow:0 20px 55px rgba(232,25,44,.22)}
+.full-card{width:100%;aspect-ratio:1.586;border-radius:20px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.16,1,.3,1);box-shadow:0 20px 55px rgba(232,25,44,.22)}
 .full-card.flipped{transform:rotateY(180deg)}
-.fc-face{position:absolute;inset:0;border-radius:20px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:1.4rem 1.5rem;background:linear-gradient(135deg,#e8192c,#7a0b16)}
-.fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#c41020,#5a0810)}
+.fc-face{position:absolute;inset:0;border-radius:20px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:1.4rem 1.5rem;background:linear-gradient(135deg,#e8192c,#7a0b16);overflow:hidden}
+.fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#c41020,#5a0810);overflow:hidden}
 .fc-g1{position:absolute;top:-30px;right:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.07)}
 .fc-g2{position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
 .fc-sh{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.06) 50%,transparent 60%);background-size:200%;animation:shimmer 3s linear infinite}
@@ -422,14 +422,39 @@ button{cursor:pointer;border:none;background:none}
         <div class="fc-face"><div class="fc-g1"></div><div class="fc-g2"></div><div class="fc-sh"></div><div class="fc-sc"></div>
           <div class="fc-top"><span class="fc-brand">Wave LTD</span><span class="fc-visa">VISA</span></div>
           <div class="fc-chip-row"><div class="fc-chip"></div><div class="fc-nfc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div><span class="fc-type">Crypto Debit</span></div>
-          <div class="fc-num">4829 &nbsp;---- &nbsp;---- &nbsp;7741</div>
+          <div class="fc-num">4829 &nbsp;---- &nbsp;---- &nbsp;3927</div>
           <div class="fc-bot"><div><div class="fc-lbl">Card Holder</div><div class="fc-val">JAWAD ADNAN</div></div><div style="text-align:right"><div class="fc-lbl">Valid Thru</div><div class="fc-val">03/29</div></div></div>
         </div>
         <div class="fc-face fc-back">
           <div class="fc-mag"></div>
-          <div class="fc-sig"><span class="fc-sig-txt">Jawad Adnan</span><div class="fc-cvv">742</div></div>
-          <div class="fc-bk-info">Issued by Wave LTD Financial Inc. Powered by Visa. Crypto conversions at real-time spot rates. support[at]waveltd.com</div>
-          <div class="fc-bk-logo">Wave LTD</div>
+          <!-- LOCKED state -->
+          <div id="cardBackLocked" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100% - 50px);gap:.55rem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.8" style="width:28px;height:28px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span style="font-size:.72rem;color:rgba(255,255,255,.4);text-align:center;letter-spacing:.02em">Enter PIN to reveal details</span>
+          </div>
+          <!-- UNLOCKED state -->
+          <div id="cardBackUnlocked" style="display:none">
+            <div class="fc-sig">
+              <span class="fc-sig-txt">JAWAD ADNAN</span>
+              <div class="fc-cvv" id="cardCVV">381</div>
+            </div>
+            <div style="background:rgba(255,255,255,.09);border-radius:5px;padding:.48rem .75rem;margin-bottom:.6rem">
+              <div style="font-size:.52rem;color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.2rem">Full Card Number</div>
+              <div style="font-size:.88rem;letter-spacing:.18em;color:#fff;font-weight:600" id="cardFullNum">4829 5514 7703 3927</div>
+            </div>
+            <div style="display:flex;gap:.5rem;margin-bottom:.5rem">
+              <div style="flex:1;background:rgba(255,255,255,.09);border-radius:5px;padding:.4rem .7rem">
+                <div style="font-size:.5rem;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.15rem">Expiry</div>
+                <div style="font-size:.78rem;color:#fff;font-weight:600">03 / 29</div>
+              </div>
+              <div style="flex:1;background:rgba(255,255,255,.09);border-radius:5px;padding:.4rem .7rem">
+                <div style="font-size:.5rem;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.15rem">CVV</div>
+                <div style="font-size:.78rem;color:#fff;font-weight:600;letter-spacing:.2em" id="cardCVV2">381</div>
+              </div>
+            </div>
+            <div class="fc-bk-info">Issued by Wave LTD Financial Inc. Powered by Visa.</div>
+            <div class="fc-bk-logo">Wave LTD</div>
+          </div>
         </div>
       </div>
     </div>
@@ -631,13 +656,53 @@ button{cursor:pointer;border:none;background:none}
 ====================================== */
 const KEY = 'waveltd_data';
 
-const PRICES = { BTC:71240, ETH:2686, USDT:1, SOL:170 };
-const CRYPTO_META = {
-  BTC:{name:'Bitcoin',  sym:'BTC', color:'#F7931A', letter:'B'},
-  ETH:{name:'Ethereum', sym:'ETH', color:'#627EEA', letter:'E'},
-  USDT:{name:'Tether',  sym:'USDT',color:'#26A17B', letter:'T'},
-  SOL:{name:'Solana',   sym:'SOL', color:'#9945FF', letter:'S'},
+var PRICES = {
+  BTC:71240, ETH:2686, USDT:1.00, SOL:170, BNB:595,
+  XRP:0.582, ADA:0.445, AVAX:35.7, DOT:7.82, LINK:14.60,
+  MATIC:0.88, LTC:84.50, DOGE:0.158, SHIB:0.0000245,
+  USDC:1.00, TRX:0.122
 };
+var PRICES_BASE = JSON.parse(JSON.stringify(PRICES));
+var CRYPTO_META = {
+  USDT: {name:'TetherUS',       color:'#26A17B', letter:'T'},
+  USDC: {name:'USD Coin',       color:'#2775CA', letter:'U'},
+  BTC:  {name:'Bitcoin',        color:'#F7931A', letter:'B'},
+  ETH:  {name:'Ethereum',       color:'#627EEA', letter:'E'},
+  BNB:  {name:'BNB',            color:'#F3BA2F', letter:'N'},
+  SOL:  {name:'Solana',         color:'#9945FF', letter:'S'},
+  XRP:  {name:'Ripple',         color:'#346AA9', letter:'X'},
+  ADA:  {name:'Cardano',        color:'#3CC8C8', letter:'A'},
+  AVAX: {name:'Avalanche',      color:'#E84142', letter:'V'},
+  DOT:  {name:'Polkadot',       color:'#E6007A', letter:'D'},
+  LINK: {name:'Chainlink',      color:'#375BD2', letter:'L'},
+  MATIC:{name:'Polygon',        color:'#8247E5', letter:'M'},
+  LTC:  {name:'Litecoin',       color:'#345D9D', letter:'L'},
+  DOGE: {name:'Dogecoin',       color:'#C2A633', letter:'D'},
+  TRX:  {name:'TRON',           color:'#EF0027', letter:'T'},
+  SHIB: {name:'Shiba Inu',      color:'#FFA409', letter:'S'}
+};
+var ALL_COINS = Object.keys(CRYPTO_META);
+
+// Simulate live price drift  prices move +/-0.5% every 8 seconds
+function startPriceTicker() {
+  setInterval(function() {
+    ALL_COINS.forEach(function(sym) {
+      if (sym === 'USDT' || sym === 'USDC') return;
+      var base = PRICES_BASE[sym];
+      var drift = 1 + (Math.random() - 0.48) * 0.008;
+      PRICES[sym] = parseFloat((PRICES[sym] * drift).toFixed(sym === 'SHIB' ? 10 : sym === 'DOGE' || sym === 'TRX' || sym === 'XRP' || sym === 'ADA' || sym === 'MATIC' ? 4 : 2));
+    });
+    // Re-render assets if visible
+    var assetsScr = document.getElementById('scrAssets');
+    if (assetsScr && assetsScr.classList.contains('active')) {
+      renderAssets(getStore());
+    }
+    var coinScr = document.getElementById('scrCoin');
+    if (coinScr && coinScr.classList.contains('active') && typeof currentCoin !== 'undefined') {
+      openCoinDetail(currentCoin);
+    }
+  }, 8000);
+}
 
 function getStore() {
   try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch(e) {}
@@ -651,8 +716,7 @@ function makeDefault() {
       {id:2,type:'expense',name:'Google Colab',date:'2026-01-04 11:16:34',amount:11.49,note:'-- 0201',status:'declined'},
       {id:3,type:'expense',name:'Google Colab',date:'2026-01-03 23:16:12',amount:11.49,note:'-- 0201',status:'declined'},
     ],
-    // crypto holdings in USD value
-    crypto: { BTC: 0, ETH: 0, USDT: 0, SOL: 0 }
+    crypto: {BTC:0,ETH:0,USDT:0,SOL:0,BNB:0,XRP:0,ADA:0,AVAX:0,DOT:0,LINK:0,MATIC:0,LTC:0,DOGE:0,SHIB:0,TRX:0,USDC:0}
   };
 }
 function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
@@ -670,6 +734,10 @@ function showHome() {
   renderAll();
   clearInterval(window._poll);
   window._poll = setInterval(renderAll, 3000);
+  if (!window._priceTicker) {
+    window._priceTicker = true;
+    startPriceTicker();
+  }
 }
 
 const TABS = {
@@ -935,15 +1003,16 @@ function renderAssets(s) {
       + "</div></div>";
     return;
   }
-  var CHANGES = {BTC:"+3.2%",ETH:"+1.8%",USDT:"0.0%",SOL:"+5.1%",USDC:"0.0%",BNB:"+2.3%"};
+  var CHANGES = {};
   var rows = "";
   Object.keys(CRYPTO_META).forEach(function(sym) {
     var m = CRYPTO_META[sym];
     var price = PRICES[sym];
     var holdUSD = (s.crypto && s.crypto[sym]) ? s.crypto[sym] : 0;
     var holdAmt = holdUSD / price;
-    var chg = CHANGES[sym] || "0.0%";
-    var chgColor = chg.charAt(0) === "+" ? "var(--green)" : (chg === "0.0%" ? "var(--txt3)" : "var(--red)");
+    var pctChg = PRICES_BASE[sym] > 0 ? ((PRICES[sym] - PRICES_BASE[sym]) / PRICES_BASE[sym] * 100) : 0;
+    var chg = (pctChg >= 0 ? "+" : "") + pctChg.toFixed(2) + "%";
+    var chgColor = pctChg > 0 ? "var(--green)" : pctChg < 0 ? "var(--red)" : "var(--txt3)";
     rows += "<div onclick=\"openCoinDetail('" + sym + "')\""
       + " style=\"display:flex;align-items:center;gap:.85rem;padding:.88rem 1.2rem;border-bottom:1px solid var(--border);cursor:pointer\">"
       + "<div style=\"width:40px;height:40px;border-radius:50%;background:" + m.color + ";display:grid;place-items:center;font-size:.82rem;font-weight:800;color:#fff;flex-shrink:0\">" + m.letter + "</div>"
@@ -1035,20 +1104,20 @@ function openCoinSend() { goTab('send'); }
 // ---- CARD FLIP + PIN ----
 function handleCardFlip() {
   var card = document.getElementById('dashCard');
-  var isFlipped = card.style.transform === 'rotateY(180deg)';
+  var isFlipped = card.classList.contains('flipped');
   if (isFlipped) {
-    card.style.transform = '';
+    card.classList.remove('flipped');
     var bl = document.getElementById('cardBackLocked');
     var bu = document.getElementById('cardBackUnlocked');
-    if(bl) bl.style.display = 'flex';
-    if(bu) bu.style.display = 'none';
+    if (bl) bl.style.display = 'flex';
+    if (bu) bu.style.display = 'none';
   } else {
     var pi = document.getElementById('cardPinInput');
     var pe = document.getElementById('cardPinErr');
-    if(pi) pi.value = '';
-    if(pe) pe.style.display = 'none';
+    if (pi) pi.value = '';
+    if (pe) pe.style.display = 'none';
     openSheet('sheetCardPin');
-    setTimeout(function() { if(pi) pi.focus(); }, 300);
+    setTimeout(function() { if (pi) pi.focus(); }, 300);
   }
 }
 function verifyCardPin() {
@@ -1057,23 +1126,23 @@ function verifyCardPin() {
   if (!pi) return;
   var pin = pi.value.trim();
   if (pin === '111005376') {
-    if(pe) pe.style.display = 'none';
+    if (pe) pe.style.display = 'none';
     closeSheet('sheetCardPin');
     var card = document.getElementById('dashCard');
-    card.style.transform = 'rotateY(180deg)';
+    card.classList.add('flipped');
     var bl = document.getElementById('cardBackLocked');
     var bu = document.getElementById('cardBackUnlocked');
-    if(bl) bl.style.display = 'none';
-    if(bu) bu.style.display = 'block';
+    if (bl) bl.style.display = 'none';
+    if (bu) bu.style.display = 'block';
     toast('Card details unlocked');
   } else {
-    if(pe) pe.style.display = 'block';
+    if (pe) pe.style.display = 'block';
     pi.value = '';
   }
 }
 document.addEventListener('DOMContentLoaded', function() {
   var pi = document.getElementById('cardPinInput');
-  if (pi) pi.addEventListener('keydown', function(e) { if(e.key === 'Enter') verifyCardPin(); });
+  if (pi) pi.addEventListener('keydown', function(e) { if (e.key === 'Enter') verifyCardPin(); });
 });
 
 </script>
