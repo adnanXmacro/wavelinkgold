@@ -26,7 +26,7 @@ button,input,select{font:inherit;-webkit-appearance:none}
 button{cursor:pointer;border:none;background:none}
 ::-webkit-scrollbar{display:none}
 
-/* ── ANIMATIONS ── */
+/*  ANIMATIONS  */
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
@@ -351,17 +351,13 @@ button{cursor:pointer;border:none;background:none}
 </head>
 <body>
 
-<!-- ════════════════════════════════
+<!-- ================================
      LOGIN SCREEN
-════════════════════════════════ -->
+================================ -->
 <div class="screen active" id="scrLogin">
   <div style="width:100%;max-width:380px;padding:2rem 1.5rem;display:flex;flex-direction:column;align-items:center">
     <div class="login-logo">
-      <div class="login-logo-ic">
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 6l3.5 8L8 9.5 10 14l2.5-4.5L15 14l3.5-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</div>
+      <div class="login-logo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M2 12Q5.5 6 9 12Q12.5 18 16 12Q19.5 6 23 12"/></svg></div>
       <span class="login-logo-nm">Wave LTD</span>
     </div>
     <div class="login-card-preview">
@@ -369,7 +365,7 @@ button{cursor:pointer;border:none;background:none}
         <div class="lc-g1"></div><div class="lc-g2"></div><div class="lc-sh"></div><div class="lc-sc"></div>
         <div class="lc-in">
           <div class="lc-top"><span class="lc-brand">Wave LTD</span><span class="lc-visa">VISA</span></div>
-          <div><div class="lc-chip"></div><div class="lc-num">•••• &nbsp;•••• &nbsp;•••• &nbsp;7741</div></div>
+          <div><div class="lc-chip"></div><div class="lc-num">---- &nbsp;---- &nbsp;---- &nbsp;7741</div></div>
           <div class="lc-bot">
             <div><div class="lc-lbl">Card Holder</div><div class="lc-val">JAWAD ADNAN</div></div>
             <div style="text-align:right"><div class="lc-lbl">Valid Thru</div><div class="lc-val">03/29</div></div>
@@ -400,17 +396,13 @@ button{cursor:pointer;border:none;background:none}
   </div>
 </div>
 
-<!-- ════════════════════════════════
+<!-- ================================
      HOME SCREEN
-════════════════════════════════ -->
+================================ -->
 <div class="screen" id="scrHome">
   <!-- top bar -->
   <div class="app-bar">
-    <div class="ab-av" style="background:var(--card2);border:1px solid var(--border2)">
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 5.5l3 7L7.5 8 9 12l2.5-4 2.5 4 3-7" stroke="var(--txt2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</div>
+    <div class="ab-av"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div>
     <span class="ab-title">Wave LTD</span>
     <div class="ab-right">
       <button class="ab-btn" onclick="openDeposit()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h2v2h-2zM18 14h3v2M14 18h2v3M18 18h3v3"/></svg></button>
@@ -462,120 +454,60 @@ button{cursor:pointer;border:none;background:none}
   </nav>
 </div>
 
-<!-- ════════════════════════════════
-     CARD SCREEN (matches screenshot 3)
-════════════════════════════════ -->
+<!-- ================================
+     CARD SCREEN
+================================ -->
 <div class="screen" id="scrCard">
-  <!-- Header: "Cards" title + action icons -->
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.2rem .8rem">
-    <span style="font-size:1.6rem;font-weight:800;letter-spacing:-.03em">Cards</span>
-    <div style="display:flex;gap:.5rem">
-      <button style="width:34px;height:34px;display:grid;place-items:center;background:var(--card2);border-radius:8px;border:1px solid var(--border2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg></button>
-      <button onclick="openNewCard()" style="width:34px;height:34px;display:grid;place-items:center;background:var(--card2);border-radius:8px;border:1px solid var(--border2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-    </div>
-  </div>
-
-  <!-- Dark card — fixed 3D flip -->
-  <div style="padding:0 1.2rem 1.2rem">
-    <div style="width:100%;aspect-ratio:1.586;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.16,1,.3,1);border-radius:18px" id="dashCard" onclick="handleCardFlip()">
-      <!-- FRONT -->
-      <div style="position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#1c1c1c;padding:1.4rem 1.6rem;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 12px 40px rgba(0,0,0,.5)">
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <div style="display:flex;align-items:center;gap:.55rem">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect width="22" height="22" rx="5" fill="#e8192c"/><path d="M4 7l3 8 2.5-5.5L12 15l2.5-5.5L18 15" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span style="font-size:.82rem;font-weight:700;color:rgba(255,255,255,.92)">Wave LTD</span>
-          </div>
-          <span style="font-size:1rem;font-weight:800;font-style:italic;color:rgba(255,255,255,.85);letter-spacing:.02em">VISA</span>
+  <div class="app-bar"><div class="ab-av" style="opacity:0"></div><span class="ab-title">My Card</span><div class="ab-right"><button class="ab-btn" onclick="doLogout()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button></div></div>
+  <div class="card-page">
+    <div class="full-card-wrap">
+      <div class="full-card" id="dashCard" onclick="handleCardFlip()">
+        <div class="fc-face"><div class="fc-g1"></div><div class="fc-g2"></div><div class="fc-sh"></div><div class="fc-sc"></div>
+          <div class="fc-top"><span class="fc-brand">Wave LTD</span><span class="fc-visa">VISA</span></div>
+          <div class="fc-chip-row"><div class="fc-chip"></div><div class="fc-nfc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div><span class="fc-type">Crypto Debit</span></div>
+          <div class="fc-num">4829 &nbsp;---- &nbsp;---- &nbsp;7741</div>
+          <div class="fc-bot"><div><div class="fc-lbl">Card Holder</div><div class="fc-val">JAWAD ADNAN</div></div><div style="text-align:right"><div class="fc-lbl">Valid Thru</div><div class="fc-val">03/29</div></div></div>
         </div>
-        <div>
-          <div style="font-size:.85rem;letter-spacing:.18em;color:rgba(255,255,255,.5);font-weight:500;margin-bottom:.45rem">•• 0201</div>
-          <div style="font-size:.68rem;font-weight:500;color:rgba(255,255,255,.3);letter-spacing:.06em">TAP TO FLIP &amp; VIEW DETAILS</div>
-        </div>
-      </div>
-      <!-- BACK — requires PIN -->
-      <div id="cardBackFace" style="position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#111;padding:1.4rem 1.5rem;box-shadow:0 12px 40px rgba(0,0,0,.5)">
-        <div style="height:36px;background:rgba(255,255,255,.08);margin:-1.4rem -1.5rem 1.1rem"></div>
-        <div id="cardBackLocked" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100% - 55px);gap:.5rem">
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.8" style="width:28px;height:28px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <span style="font-size:.72rem;color:rgba(255,255,255,.38);text-align:center">Enter PIN to reveal card details</span>
-        </div>
-        <div id="cardBackUnlocked" style="display:none">
-          <div style="background:rgba(255,255,255,.09);border-radius:5px;padding:.5rem .8rem;margin-bottom:.6rem">
-            <div style="font-size:.58rem;color:rgba(255,255,255,.42);letter-spacing:.1em;margin-bottom:.2rem">CARD NUMBER</div>
-            <div style="font-size:.88rem;letter-spacing:.16em;color:#fff;font-weight:600">4829 7741 0201 9983</div>
-          </div>
-          <div style="display:flex;gap:.55rem;margin-bottom:.6rem">
-            <div style="flex:1;background:rgba(255,255,255,.09);border-radius:5px;padding:.5rem .75rem">
-              <div style="font-size:.58rem;color:rgba(255,255,255,.42);letter-spacing:.1em;margin-bottom:.2rem">EXPIRY</div>
-              <div style="font-size:.82rem;color:#fff;font-weight:600">03 / 29</div>
-            </div>
-            <div style="flex:1;background:rgba(255,255,255,.09);border-radius:5px;padding:.5rem .75rem">
-              <div style="font-size:.58rem;color:rgba(255,255,255,.42);letter-spacing:.1em;margin-bottom:.2rem">CVV</div>
-              <div style="font-size:.88rem;color:#fff;font-weight:600;letter-spacing:.22em">742</div>
-            </div>
-          </div>
-          <div style="font-size:.56rem;color:rgba(255,255,255,.25);line-height:1.5">Issued by Wave LTD Financial Inc. Powered by Visa. support [at] waveltd.com</div>
-          <div style="text-align:right;margin-top:.5rem;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.35)">Wave LTD</div>
+        <div class="fc-face fc-back">
+          <div class="fc-mag"></div>
+          <div class="fc-sig"><span class="fc-sig-txt">Jawad Adnan</span><div class="fc-cvv">742</div></div>
+          <div class="fc-bk-info">Issued by Wave LTD Financial Inc. Powered by Visa. Crypto conversions at real-time spot rates. support[at]waveltd.com</div>
+          <div class="fc-bk-logo">Wave LTD</div>
         </div>
       </div>
     </div>
-    <div style="text-align:center;font-size:.7rem;color:var(--txt3);margin-top:.6rem;display:flex;align-items:center;justify-content:center;gap:.3rem">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:11px;height:11px"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>Tap to flip &#183; PIN required
+    <div class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>Tap card to flip</div>
+    <div class="card-ctrls">
+      <div class="cc" id="freezeBtn" onclick="toggleFreeze()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M4.93 4.93l14.14 14.14M2 12h20M4.93 19.07 19.07 4.93"/></svg><div class="cc-lbl" id="freezeLbl">Freeze</div></div>
+      <div class="cc" onclick="copyCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><div class="cc-lbl">Copy</div></div>
+      <div class="cc" onclick="openDeposit()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><div class="cc-lbl">Top Up</div></div>
+      <div class="cc" onclick="openNewCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="12" y1="10" x2="12" y2="18"/><line x1="8" y1="14" x2="16" y2="14"/></svg><div class="cc-lbl">New Card</div></div>
+    </div>
+    <div class="spend-block">
+      <div class="spend-row"><span class="spend-lbl">Monthly Spend</span><span class="spend-val" id="spendTxt">$0 / $10,000</span></div>
+      <div class="spend-track"><div class="spend-fill" id="spendFill" style="width:0%"></div></div>
     </div>
   </div>
-
-  <!-- 4 action buttons: View / Freeze / Limit / Settings -->
-  <div style="display:flex;justify-content:space-around;padding:.5rem 1rem 1.4rem">
-    <div onclick="copyCard()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-      <div style="width:52px;height:52px;border-radius:50%;background:var(--card2);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-      <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">View</span>
-    </div>
-    <div id="freezeBtn" onclick="toggleFreeze()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-      <div style="width:52px;height:52px;border-radius:50%;background:var(--card2);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px" id="freezeIcon"><path d="M12 2v20M4.93 4.93l14.14 14.14M2 12h20M4.93 19.07 19.07 4.93"/></svg></div>
-      <span style="font-size:.76rem;font-weight:500;color:var(--txt2)" id="freezeLbl">Freeze</span>
-    </div>
-    <div onclick="toast('Spend limit: $10,000/month')" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-      <div style="width:52px;height:52px;border-radius:50%;background:var(--card2);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><circle cx="17" cy="12" r="3"/><line x1="4" y1="18" x2="11" y2="18"/><circle cx="14" cy="18" r="3"/></svg></div>
-      <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Limit</span>
-    </div>
-    <div onclick="toast('Card settings coming soon')" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-      <div style="width:52px;height:52px;border-radius:50%;background:var(--card2);display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-      <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Settings</span>
-    </div>
-  </div>
-
-  <!-- Transactions section matching screenshot 3 -->
-  <div style="padding:0 1.2rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem">
-      <span style="font-size:1rem;font-weight:700">Transactions</span>
-      <div style="display:flex;gap:.5rem;align-items:center">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;color:var(--txt3)"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--txt3)"><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></svg>
-      </div>
-    </div>
-    <div id="cardTxList"></div>
-  </div>
-
   <nav class="bot-nav">
-    <div class="bn" onclick="goTab('home')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="bn-lbl">Home</span></div>
-    <div class="bn active"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="bn-lbl">Card</span></div>
-    <div class="bn" onclick="goTab('send')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><span class="bn-lbl">Send</span></div>
-    <div class="bn" onclick="goTab('assets')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><span class="bn-lbl">Assets</span></div>
-    <div class="bn" onclick="goTab('profile')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span class="bn-lbl">Profile</span></div>
+    <div class="bn" id="cn-home" onclick="goTab('home')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="bn-lbl">Home</span></div>
+    <div class="bn active" id="cn-card"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="bn-lbl">Card</span></div>
+    <div class="bn" id="cn-send" onclick="goTab('send')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><span class="bn-lbl">Send</span></div>
+    <div class="bn" id="cn-assets" onclick="goTab('assets')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><span class="bn-lbl">Assets</span></div>
+    <div class="bn" id="cn-profile" onclick="goTab('profile')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span class="bn-lbl">Profile</span></div>
   </nav>
 </div>
 
-<!-- ════════════════════════════════
+<!-- ================================
      SEND SCREEN
-════════════════════════════════ -->
+================================ -->
 <div class="screen" id="scrSend">
   <div class="app-bar"><div class="ab-av" style="opacity:0"></div><span class="ab-title">Send</span><div></div></div>
   <div class="send-page">
     <div class="send-bal-chip"><div><div class="sbc-label">Available Balance</div><div class="sbc-val" id="sendBalDisplay">$0.00</div></div><div style="font-size:.78rem;font-weight:600;color:var(--txt2)">USD</div></div>
     <p style="font-size:.8rem;color:var(--txt2);margin-bottom:1rem;font-weight:500">Quick Send</p>
     <div class="send-contacts">
-      <div class="contact" onclick="prefillSend('Marcus O.','marcus [at] waveltd.com')"><div class="contact-av" style="background:#F7931A">M</div><div><div class="contact-name">Marcus O.</div><div class="contact-addr"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="721f130011070132051304171e06165c111d1f">[email&#160;protected]</a></div></div><div class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-      <div class="contact" onclick="prefillSend('Sophia H.','sophia [at] waveltd.com')"><div class="contact-av" style="background:#627EEA">S</div><div><div class="contact-name">Sophia H.</div><div class="contact-addr"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f7c607f67666e4f786e796a637b6b216c6062">[email&#160;protected]</a></div></div><div class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      <div class="contact" onclick="prefillSend('Marcus O.','marcus[at]waveltd.com')"><div class="contact-av" style="background:#F7931A">M</div><div><div class="contact-name">Marcus O.</div><div class="contact-addr">marcus[at]waveltd.com</div></div><div class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      <div class="contact" onclick="prefillSend('Sophia H.','sophia[at]waveltd.com')"><div class="contact-av" style="background:#627EEA">S</div><div><div class="contact-name">Sophia H.</div><div class="contact-addr">sophia[at]waveltd.com</div></div><div class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
     </div>
     <div class="send-form">
       <h4>Send Money</h4>
@@ -594,36 +526,18 @@ button{cursor:pointer;border:none;background:none}
   </nav>
 </div>
 
-<!-- ════════════════════════════════
-     ASSETS SCREEN
-════════════════════════════════ -->
+<!-- ================================
+     ASSETS SCREEN (Buy/Sell Crypto)
+================================ -->
 <div class="screen" id="scrAssets">
   <div class="app-bar"><div class="ab-av" style="opacity:0"></div><span class="ab-title">Assets</span><div></div></div>
   <div class="assets-page">
-    <!-- Balance display matches screenshot 2 -->
-    <div style="padding:.2rem 1.2rem 1rem">
-      <div style="font-size:.85rem;color:var(--txt2);display:flex;align-items:center;gap:.4rem;margin-bottom:.4rem">
-        Available balance
-        <svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        <svg style="width:17px;height:17px;color:var(--txt3)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-      </div>
-      <div style="display:flex;align-items:baseline;gap:.4rem;margin-bottom:1.2rem">
-        <span style="font-size:2.8rem;font-weight:800;letter-spacing:-.04em;line-height:1" id="assetBalDisplay">0.27</span>
-        <div style="display:flex;align-items:center;gap:.2rem;font-size:1rem;font-weight:700;color:var(--txt2)">USD<svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-      </div>
-      <!-- Add funds / Earn / Credit buttons -->
-      <div style="display:flex;gap:.6rem;margin-bottom:1.4rem">
-        <button onclick="openDeposit()" style="flex:1;padding:.75rem .5rem;background:#fff;border:none;border-radius:50px;font-size:.84rem;font-weight:700;color:#000;transition:opacity .15s">Add funds</button>
-        <button onclick="toast('Earn feature coming soon')" style="flex:1;padding:.75rem .5rem;background:var(--card2);border:none;border-radius:50px;font-size:.84rem;font-weight:600;color:var(--txt);transition:opacity .15s">Earn</button>
-        <button onclick="toast('Credit feature coming soon')" style="flex:1;padding:.75rem .5rem;background:var(--card2);border:none;border-radius:50px;font-size:.84rem;font-weight:600;color:var(--txt);transition:opacity .15s">Credit</button>
-      </div>
-      <!-- Crypto / Fiat tabs -->
-      <div style="display:flex;gap:1.5rem;border-bottom:1px solid var(--border);margin-bottom:0">
-        <div id="atab-crypto" onclick="setAssetTab('crypto')" style="font-size:.92rem;font-weight:700;color:var(--txt);padding-bottom:.65rem;border-bottom:2px solid var(--txt);cursor:pointer">Crypto</div>
-        <div id="atab-fiat" onclick="setAssetTab('fiat')" style="font-size:.92rem;font-weight:600;color:var(--txt2);padding-bottom:.65rem;border-bottom:2px solid transparent;cursor:pointer">Fiat</div>
-      </div>
+    <div class="asset-bal-chip"><div class="abc-label">USD Balance</div><div class="abc-val" id="assetBalDisplay">$0.00</div></div>
+    <div class="asset-tabs">
+      <div class="asset-tab active" id="at-buy" onclick="setAssetTab('buy')">Buy Crypto</div>
+      <div class="asset-tab" id="at-sell" onclick="setAssetTab('sell')">Sell Crypto</div>
     </div>
-    <div class="asset-list" id="assetList" style="padding:0 0 1rem"></div>
+    <div class="asset-list" id="assetList"></div>
   </div>
   <nav class="bot-nav">
     <div class="bn" onclick="goTab('home')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="bn-lbl">Home</span></div>
@@ -634,82 +548,16 @@ button{cursor:pointer;border:none;background:none}
   </nav>
 </div>
 
-<!-- ════════════════════════════════
-     COIN DETAIL SCREEN (screenshot 4)
-════════════════════════════════ -->
-<div class="screen" id="scrCoin">
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;position:sticky;top:0;background:var(--bg);z-index:50">
-    <button onclick="goTab('assets')" style="width:34px;height:34px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
-    <div></div>
-    <button style="width:34px;height:34px;display:grid;place-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></svg></button>
-  </div>
-  <div style="padding:0 1.2rem 2rem;text-align:center">
-    <!-- Coin header -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.8rem">
-      <div id="coinDetailLogo" style="width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:.82rem;font-weight:800;color:#fff;flex-shrink:0;background:#F7931A">B</div>
-      <div style="display:flex;align-items:center;gap:.35rem;font-size:1.1rem;font-weight:700" id="coinDetailSym">BTC <svg style="width:14px;height:14px;color:var(--txt2)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
-    </div>
-    <!-- Amount -->
-    <div style="font-size:3rem;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:.4rem" id="coinDetailAmt">0.00</div>
-    <div style="font-size:.9rem;color:var(--txt2);margin-bottom:2rem" id="coinDetailUSD">≈ 0.00 USD</div>
-    <!-- 4 action buttons: Add funds / Withdraw / Send / Swap -->
-    <div style="display:flex;justify-content:space-around;gap:.5rem;margin-bottom:2.5rem">
-      <div onclick="openCoinDeposit()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-        <div style="width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center">
-          <svg style="width:22px;height:22px;color:#000;stroke-width:2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Add funds</span>
-      </div>
-      <div onclick="openCoinWithdraw()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-        <div style="width:56px;height:56px;border-radius:50%;background:var(--card2);display:grid;place-items:center">
-          <svg style="width:20px;height:20px;color:var(--txt)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-        </div>
-        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Withdraw</span>
-      </div>
-      <div onclick="openCoinSend()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-        <div style="width:56px;height:56px;border-radius:50%;background:var(--card2);display:grid;place-items:center">
-          <svg style="width:20px;height:20px;color:var(--txt)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </div>
-        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Send</span>
-      </div>
-      <div onclick="openSwap()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
-        <div style="width:56px;height:56px;border-radius:50%;background:var(--card2);display:grid;place-items:center">
-          <svg style="width:20px;height:20px;color:var(--txt)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-        </div>
-        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Swap</span>
-      </div>
-    </div>
-    <!-- History -->
-    <div style="text-align:left">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-        <span style="font-size:.95rem;font-weight:700">History</span>
-        <svg style="width:16px;height:16px;color:var(--txt3)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></svg>
-      </div>
-      <div id="coinHistory" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 0;color:var(--txt3)">
-        <svg style="width:48px;height:48px;opacity:.3;margin-bottom:.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14M5 8a2 2 0 1 0 0-4h14a2 2 0 1 0 0 4M5 8l1 11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2L19 8M10 12v6M14 12v6"/></svg>
-        <div style="font-size:.88rem;font-weight:500">No history found</div>
-      </div>
-    </div>
-  </div>
-  <nav class="bot-nav">
-    <div class="bn" onclick="goTab('home')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="bn-lbl">Home</span></div>
-    <div class="bn" onclick="goTab('card')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="bn-lbl">Card</span></div>
-    <div class="bn" onclick="goTab('send')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><span class="bn-lbl">Send</span></div>
-    <div class="bn active"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><span class="bn-lbl">Assets</span></div>
-    <div class="bn" onclick="goTab('profile')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span class="bn-lbl">Profile</span></div>
-  </nav>
-</div>
-
-<!-- ════════════════════════════════
+<!-- ================================
      PROFILE SCREEN
-════════════════════════════════ -->
+================================ -->
 <div class="screen" id="scrProfile">
   <div class="app-bar"><div class="ab-av" style="opacity:0"></div><span class="ab-title">Profile</span><div></div></div>
   <div class="profile-page">
-    <div class="profile-header"><div class="profile-av">JA</div><div class="profile-name">Jawad Adnan</div><div class="profile-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="016b6076606541766077646d75652f626e6c">[email&#160;protected]</a></div></div>
+    <div class="profile-header"><div class="profile-av">JA</div><div class="profile-name">Jawad Adnan</div><div class="profile-email">jawad[at]waveltd.com</div></div>
     <div class="profile-items">
-      <div class="profile-item"><div class="pi-ico" style="background:var(--red-dim)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="pi-label">Account Details</div><div class="pi-sub">Jawad Adnan · Verified</div></div><div class="pi-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-      <div class="profile-item"><div class="pi-ico" style="background:var(--blue-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="pi-label">Security</div><div class="pi-sub">2FA · Biometrics enabled</div></div><div class="pi-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      <div class="profile-item"><div class="pi-ico" style="background:var(--red-dim)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="pi-label">Account Details</div><div class="pi-sub">Jawad Adnan . Verified</div></div><div class="pi-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      <div class="profile-item"><div class="pi-ico" style="background:var(--blue-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="pi-label">Security</div><div class="pi-sub">2FA . Biometrics enabled</div></div><div class="pi-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
       <div class="profile-item"><div class="pi-ico" style="background:rgba(245,158,11,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div><div><div class="pi-label">Notifications</div><div class="pi-sub">All alerts enabled</div></div><div class="pi-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
       <div class="profile-item"><div class="pi-ico" style="background:var(--green-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div><div class="pi-label">Transaction History</div><div class="pi-sub">All time records</div></div><div class="pi-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
     </div>
@@ -724,31 +572,9 @@ button{cursor:pointer;border:none;background:none}
   </nav>
 </div>
 
-<!-- ════════════════════════════════
-     CARD PIN MODAL
-════════════════════════════════ -->
-<div class="sheet-overlay" id="sheetCardPin">
-  <div class="sheet" style="position:relative;text-align:center">
-    <div class="sheet-handle"></div>
-    <button class="sheet-close" onclick="cancelCardFlip()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-    <div style="margin-bottom:1.2rem">
-      <div style="width:52px;height:52px;border-radius:50%;background:var(--red-dim);border:1px solid rgba(232,25,44,.25);display:grid;place-items:center;margin:0 auto .8rem">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="width:22px;height:22px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
-      <div style="font-size:1rem;font-weight:700;margin-bottom:.3rem">Verify Identity</div>
-      <div style="font-size:.82rem;color:var(--txt2)">Enter your PIN to view card details</div>
-    </div>
-    <div style="position:relative;margin-bottom:1rem">
-      <input id="cardPinInput" type="password" inputmode="numeric" maxlength="12" placeholder="Enter PIN" style="width:100%;padding:.82rem 1rem .82rem 3rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--txt);font-size:1.1rem;letter-spacing:.25em;text-align:center;outline:none;transition:border-color var(--tr)"/>
-    </div>
-    <div id="cardPinErr" style="font-size:.8rem;color:var(--red);margin-bottom:.8rem;display:none">Incorrect PIN. Try again.</div>
-    <button onclick="verifyCardPin()" style="width:100%;padding:.88rem;background:var(--red);color:#fff;border-radius:var(--r);font-weight:700;font-size:.92rem;box-shadow:0 3px 14px rgba(232,25,44,.28);transition:background var(--tr)">Confirm</button>
-  </div>
-</div>
-
-<!-- ════════════════════════════════
+<!-- ================================
      MODALS
-════════════════════════════════ -->
+================================ -->
 <!-- Deposit Sheet -->
 <div class="sheet-overlay" id="sheetDeposit">
   <div class="sheet" style="position:relative">
@@ -826,44 +652,34 @@ button{cursor:pointer;border:none;background:none}
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></script><script>
+<script>
 /* ======================================
    DATA STORE
 ====================================== */
 const KEY = 'waveltd_data';
 
-const PRICES = { BTC:71240, ETH:2686, USDT:1, SOL:170, USDC:1, BNB:595 };
+const PRICES = { BTC:71240, ETH:2686, USDT:1, SOL:170 };
 const CRYPTO_META = {
-  USDT:{name:'TetherUS',  sym:'USDT',color:'#26A17B', letter:'T'},
-  USDC:{name:'USDC',      sym:'USDC',color:'#2775CA', letter:'U'},
-  BTC: {name:'Bitcoin',   sym:'BTC', color:'#F7931A', letter:'B'},
-  ETH: {name:'Ethereum',  sym:'ETH', color:'#627EEA', letter:'E'},
-  SOL: {name:'Solana',    sym:'SOL', color:'#9945FF', letter:'S'},
-  BNB: {name:'BNB',       sym:'BNB', color:'#F3BA2F', letter:'N'},
+  BTC:{name:'Bitcoin',  sym:'BTC', color:'#F7931A', letter:'B'},
+  ETH:{name:'Ethereum', sym:'ETH', color:'#627EEA', letter:'E'},
+  USDT:{name:'Tether',  sym:'USDT',color:'#26A17B', letter:'T'},
+  SOL:{name:'Solana',   sym:'SOL', color:'#9945FF', letter:'S'},
 };
-const ALL_COINS = Object.keys(CRYPTO_META);
 
 function getStore() {
-  try {
-    const r = localStorage.getItem(KEY);
-    if (r) {
-      const d = JSON.parse(r);
-      if (!d.crypto || typeof d.crypto !== 'object') d.crypto = {};
-      ALL_COINS.forEach(c => { if (d.crypto[c] == null) d.crypto[c] = 0; });
-      return d;
-    }
-  } catch(e) {}
+  try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch(e) {}
   return makeDefault();
 }
 function makeDefault() {
   return {
     balance: 0.27,
     transactions: [
-      {id:1,type:'expense',name:'Google Colab',date:'2026-01-04 23:16:41',amount:11.49,note:'•• 0201',status:'declined'},
-      {id:2,type:'expense',name:'Google Colab',date:'2026-01-04 11:16:34',amount:11.49,note:'•• 0201',status:'declined'},
-      {id:3,type:'expense',name:'Google Colab',date:'2026-01-03 23:16:12',amount:11.49,note:'•• 0201',status:'declined'},
+      {id:1,type:'expense',name:'Google Colab',date:'2026-01-04 23:16:41',amount:11.49,note:'-- 0201',status:'declined'},
+      {id:2,type:'expense',name:'Google Colab',date:'2026-01-04 11:16:34',amount:11.49,note:'-- 0201',status:'declined'},
+      {id:3,type:'expense',name:'Google Colab',date:'2026-01-03 23:16:12',amount:11.49,note:'-- 0201',status:'declined'},
     ],
-    crypto: { BTC:0, ETH:0, USDT:0.2757, SOL:0, USDC:0, BNB:0 }
+    // crypto holdings in USD value
+    crypto: { BTC: 0, ETH: 0, USDT: 0, SOL: 0 }
   };
 }
 function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
@@ -888,11 +704,8 @@ function doLogin() {
     document.getElementById('lerr').style.display = 'block';
   }
 }
-// keydown handlers attached after DOM ready
-if(document.getElementById('lu')) {
-  document.getElementById('lu').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('lp').focus(); });
-  document.getElementById('lp').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-}
+document.getElementById('lu').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('lp').focus(); });
+document.getElementById('lp').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 
 function doLogout() {
   sessionStorage.removeItem('wl_ok');
@@ -919,7 +732,6 @@ const TABS = {
   send:    {scr:'scrSend',    active:'send'},
   assets:  {scr:'scrAssets',  active:'assets'},
   profile: {scr:'scrProfile', active:'profile'},
-  coin:    {scr:'scrCoin',    active:'assets'},
 };
 function goTab(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -953,8 +765,6 @@ function renderAll() {
 
   // Transactions
   renderTx(s);
-  // Card transactions
-  renderCardTx(s);
   // Assets
   renderAssets(s);
 }
@@ -990,53 +800,11 @@ function renderTx(s) {
   }).join('');
 }
 
-function renderCardTx(s) {
-  const el = document.getElementById('cardTxList');
-  if (!el) return;
-  const sorted = [...s.transactions].sort((a,b)=>b.id-a.id);
-  if (!sorted.length) { el.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--txt3);font-size:.88rem">No transactions yet.</div>'; return; }
-  // Group by date (day)
-  const groups = {};
-  sorted.forEach(tx => {
-    const day = tx.date.slice(0,10);
-    const d = new Date(day+'T12:00:00');
-    const label = d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    if (!groups[label]) groups[label] = [];
-    groups[label].push(tx);
-  });
-  el.innerHTML = Object.entries(groups).map(([label, txs]) => `
-    <div style="font-size:.8rem;font-weight:600;color:var(--txt3);padding:.6rem 0 .4rem">${label}</div>
-    ${txs.map(tx => {
-      const dec = tx.status==='declined';
-      return `<div style="display:flex;align-items:center;gap:.85rem;padding:.82rem 0;border-bottom:1px solid var(--border)">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--card2);border:1px solid var(--border2);display:grid;place-items:center;flex-shrink:0;overflow:hidden">
-          <svg style="width:18px;height:18px;color:var(--txt3)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        </div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${tx.name}</div>
-          <div style="font-size:.72rem;color:var(--txt3);margin-top:.08rem">${tx.note||''}</div>
-          <div style="font-size:.7rem;color:var(--txt3);margin-top:.04rem">${tx.date}</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-size:.88rem;font-weight:700;color:${dec?'var(--txt2)':'var(--txt)'}">${tx.type==='income'?'+':'-'}${Number(tx.amount).toFixed(2)} USD</div>
-          <div style="font-size:.7rem;font-weight:600;color:${dec?'var(--red)':tx.status==='pending'?'var(--amber)':'var(--green)'};margin-top:.12rem">${dec?'Declined':tx.status==='pending'?'Pending':'Completed'}</div>
-        </div>
-      </div>`;
-    }).join('')}`
-  ).join('');
-}
-
-let assetTabMode = 'crypto';
+let assetMode = 'buy';
 function setAssetTab(mode) {
-  assetTabMode = mode;
-  const cryptoEl = document.getElementById('atab-crypto');
-  const fiatEl = document.getElementById('atab-fiat');
-  if (cryptoEl) {
-    cryptoEl.style.color = mode==='crypto' ? 'var(--txt)' : 'var(--txt2)';
-    cryptoEl.style.borderBottomColor = mode==='crypto' ? 'var(--txt)' : 'transparent';
-    fiatEl.style.color = mode==='fiat' ? 'var(--txt)' : 'var(--txt2)';
-    fiatEl.style.borderBottomColor = mode==='fiat' ? 'var(--txt)' : 'transparent';
-  }
+  assetMode = mode;
+  document.getElementById('at-buy').classList.toggle('active', mode==='buy');
+  document.getElementById('at-sell').classList.toggle('active', mode==='sell');
   const s = getStore();
   renderAssets(s);
 }
@@ -1044,89 +812,29 @@ function setAssetTab(mode) {
 function renderAssets(s) {
   const el = document.getElementById('assetList');
   if (!el) return;
-  // Update balance display in assets tab
-  const abd = document.getElementById('assetBalDisplay');
-  if (abd) abd.textContent = Number(s.balance).toFixed(2);
-
-  if (assetTabMode === 'fiat') {
-    el.innerHTML = `<div style="padding:1rem 1.2rem">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:.88rem 0;border-bottom:1px solid var(--border)">
-        <div style="display:flex;align-items:center;gap:.85rem">
-          <div style="width:40px;height:40px;border-radius:50%;background:#0052b4;display:grid;place-items:center;font-size:.82rem;font-weight:800;color:#fff">$</div>
-          <div><div style="font-size:.9rem;font-weight:600">USD</div><div style="font-size:.74rem;color:var(--txt3)">US Dollar</div></div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:.9rem;font-weight:700">${Number(s.balance).toFixed(2)}</div>
-          <div style="font-size:.72rem;color:var(--txt3)">≈ ${Number(s.balance).toFixed(2)} USD</div>
-        </div>
-      </div>
-    </div>`;
-    return;
-  }
-
-  const CHANGES = {BTC:'+3.2%',ETH:'+1.8%',USDT:'0.0%',SOL:'+5.1%',USDC:'0.0%',BNB:'+2.3%'};
-  el.innerHTML = '<div style="padding:0 1.2rem">' + Object.entries(CRYPTO_META).map(([sym, m]) => {
+  el.innerHTML = Object.entries(CRYPTO_META).map(([sym, m]) => {
     const price = PRICES[sym];
-    const holdUSD = (s.crypto && s.crypto[sym]) || 0;
+    const holdUSD = s.crypto[sym] || 0;
     const holdAmt = holdUSD / price;
-    const chg = CHANGES[sym] || '0.0%';
-    const chgColor = chg.startsWith('+') ? 'var(--green)' : chg === '0.0%' ? 'var(--txt3)' : 'var(--red)';
-    return `<div onclick="openCoinDetail('${sym}')" style="display:flex;align-items:center;gap:.85rem;padding:.88rem 0;border-bottom:1px solid var(--border);cursor:pointer">
-      <div style="width:40px;height:40px;border-radius:50%;background:${m.color};display:grid;place-items:center;font-size:.82rem;font-weight:800;color:#fff;flex-shrink:0">${m.letter}</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:.9rem;font-weight:600">${sym}</div>
-        <div style="font-size:.74rem;color:var(--txt3)">${m.name}</div>
+    const change = {BTC:'+3.2%',ETH:'+1.8%',USDT:'0.0%',SOL:'+5.1%'}[sym];
+    const changeColor = sym==='USDT' ? 'var(--txt3)' : 'var(--green)';
+    const tradeBtn = assetMode === 'buy'
+      ? `<button class="btn-trade btn-buy" onclick="openBuy('${sym}')">Buy</button>`
+      : `<button class="btn-trade btn-sell" onclick="openSell('${sym}')"${holdUSD<=0?' disabled style="opacity:.35"':''}>Sell</button>`;
+    return `<div class="asset-item">
+      <div class="asset-logo" style="background:${m.color}">${m.letter}</div>
+      <div>
+        <div class="asset-name">${m.name}</div>
+        <div class="asset-sym">${sym} . ${holdAmt>0?holdAmt.toFixed(4)+' held':'No holdings'}</div>
       </div>
-      <div style="text-align:right">
-        <div style="font-size:.9rem;font-weight:700">${holdAmt > 0 ? holdAmt.toFixed(4) : '0.00'}</div>
-        <div style="font-size:.72rem;color:var(--txt3)">≈ ${holdUSD.toFixed(2)} USD</div>
+      <div class="asset-right">
+        <div class="asset-price">$${price.toLocaleString()}</div>
+        <div class="asset-change" style="color:${changeColor}">${change}</div>
       </div>
+      ${tradeBtn}
     </div>`;
-  }).join('') + '</div>';
+  }).join('');
 }
-
-// Coin detail
-let currentCoin = 'BTC';
-function openCoinDetail(sym) {
-  currentCoin = sym;
-  const s = getStore();
-  const m = CRYPTO_META[sym];
-  const price = PRICES[sym];
-  const holdUSD = (s.crypto && s.crypto[sym]) || 0;
-  const holdAmt = holdUSD / price;
-  document.getElementById('coinDetailLogo').style.background = m.color;
-  document.getElementById('coinDetailLogo').textContent = m.letter;
-  document.getElementById('coinDetailSym').innerHTML = `${sym} <svg style="width:14px;height:14px;color:var(--txt2)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
-  document.getElementById('coinDetailAmt').textContent = holdAmt.toFixed(2);
-  document.getElementById('coinDetailUSD').textContent = '≈ ' + holdUSD.toFixed(2) + ' USD';
-  // History
-  const txs = s.transactions.filter(t => t.name && (t.name.includes(sym)));
-  const histEl = document.getElementById('coinHistory');
-  if (txs.length) {
-    histEl.style.display = 'flex'; histEl.style.flexDirection = 'column'; histEl.style.gap = '.5rem';
-    histEl.style.padding = '0'; histEl.style.alignItems = 'stretch'; histEl.style.justifyContent = 'flex-start';
-    histEl.innerHTML = txs.sort((a,b)=>b.id-a.id).map(tx=>`
-      <div style="display:flex;align-items:center;gap:.8rem;padding:.7rem 0;border-bottom:1px solid var(--border)">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--card2);display:grid;place-items:center;flex-shrink:0">
-          <svg style="width:16px;height:16px;color:${tx.type==='income'?'var(--green)':'var(--txt3)'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${tx.type==='income'?'<line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>':'<line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>'}</svg>
-        </div>
-        <div style="flex:1"><div style="font-size:.86rem;font-weight:600">${tx.name}</div><div style="font-size:.7rem;color:var(--txt3)">${tx.date}</div></div>
-        <div style="text-align:right">
-          <div style="font-size:.86rem;font-weight:700;color:${tx.type==='income'?'var(--green)':'var(--txt2)'}">${tx.type==='income'?'+':'-'}${Number(tx.amount).toFixed(2)} USD</div>
-          <div style="font-size:.68rem;color:var(--txt3)">${tx.status||'completed'}</div>
-        </div>
-      </div>`).join('');
-  } else {
-    histEl.style.display = 'flex'; histEl.style.flexDirection = 'column'; histEl.style.alignItems = 'center'; histEl.style.justifyContent = 'center'; histEl.style.padding = '3rem 0';
-    histEl.innerHTML = `<svg style="width:48px;height:48px;opacity:.3;margin-bottom:.8rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14M5 8a2 2 0 1 0 0-4h14a2 2 0 1 0 0 4M5 8l1 11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2L19 8M10 12v6M14 12v6"/></svg><div style="font-size:.88rem;font-weight:500">No history found</div>`;
-  }
-  // Navigate to coin screen
-  document.querySelectorAll('.screen').forEach(sc=>sc.classList.remove('active'));
-  document.getElementById('scrCoin').classList.add('active');
-}
-function openCoinDeposit() { document.getElementById('buyCoin').value = currentCoin; document.getElementById('buySheetTitle').textContent = 'Add ' + currentCoin; document.getElementById('buyAmt').value=''; document.getElementById('buyPreview').textContent=''; const s=getStore(); document.getElementById('buyBalDisplay').textContent=fmtUSD(s.balance); openSheet('sheetBuy'); document.getElementById('buyAmt').oninput=function(){const a=parseFloat(this.value)||0;document.getElementById('buyPreview').textContent=a>0?`≈ ${(a/PRICES[currentCoin]).toFixed(6)} ${currentCoin}`:'';}; }
-function openCoinWithdraw() { document.getElementById('sellCoin').value = currentCoin; document.getElementById('sellSheetTitle').textContent = 'Withdraw ' + currentCoin; document.getElementById('sellAmt').value=''; document.getElementById('sellPreview').textContent=''; openSheet('sheetSell'); const s=getStore(); document.getElementById('sellAmt').oninput=function(){const a=parseFloat(this.value)||0;const held=(s.crypto&&s.crypto[currentCoin])||0;document.getElementById('sellPreview').textContent=a>0?`Holdings: ${fmtUSD(held)} · ${(a/PRICES[currentCoin]).toFixed(6)} ${currentCoin}`:'';}; }
-function openCoinSend() { goTab('send'); }
 
 /* ======================================
    ACTIONS
@@ -1174,22 +882,22 @@ function doSwap() {
     if (s.balance < amt) { toast('Insufficient USD balance'); return; }
     s.balance = +(s.balance - amt).toFixed(2);
     s.crypto[to] = +((s.crypto[to]||0) + amt).toFixed(2);
-    s.transactions.push({id:nextId(s),type:'expense',name:`Swap USD → ${to}`,date:nowStr(),amount:amt,note:`+${(amt/PRICES[to]).toFixed(4)} ${to}`,status:'completed'});
+    s.transactions.push({id:nextId(s),type:'expense',name:`Swap USD  ${to}`,date:nowStr(),amount:amt,note:`+${(amt/PRICES[to]).toFixed(4)} ${to}`,status:'completed'});
   } else if (to === 'USD') {
     // Sell crypto to USD
     if ((s.crypto[from]||0) < amt) { toast('Insufficient '+from+' value'); return; }
     s.crypto[from] = +((s.crypto[from]||0) - amt).toFixed(2);
     s.balance = +(s.balance + amt).toFixed(2);
-    s.transactions.push({id:nextId(s),type:'income',name:`Swap ${from} → USD`,date:nowStr(),amount:amt,note:`-${(amt/PRICES[from]).toFixed(4)} ${from}`,status:'completed'});
+    s.transactions.push({id:nextId(s),type:'income',name:`Swap ${from}  USD`,date:nowStr(),amount:amt,note:`-${(amt/PRICES[from]).toFixed(4)} ${from}`,status:'completed'});
   } else {
-    // Crypto to crypto (deduct from first crypto, add to second — same USD value)
+    // Crypto to crypto (deduct from first crypto, add to second - same USD value)
     if ((s.crypto[from]||0) < amt) { toast('Insufficient '+from+' value'); return; }
     s.crypto[from] = +((s.crypto[from]||0) - amt).toFixed(2);
     s.crypto[to]   = +((s.crypto[to]||0) + amt).toFixed(2);
-    s.transactions.push({id:nextId(s),type:'expense',name:`Swap ${from} → ${to}`,date:nowStr(),amount:0,note:`${fmtUSD(amt)} value`,status:'completed'});
+    s.transactions.push({id:nextId(s),type:'expense',name:`Swap ${from}  ${to}`,date:nowStr(),amount:0,note:`${fmtUSD(amt)} value`,status:'completed'});
   }
   save(s); closeSheet('sheetSwap'); renderAll();
-  toast(`Swapped ${fmtUSD(amt)} ${from} → ${to}`);
+  toast(`Swapped ${fmtUSD(amt)} ${from}  ${to}`);
 }
 
 // BUY CRYPTO
@@ -1203,7 +911,7 @@ function openBuy(sym) {
   openSheet('sheetBuy');
   document.getElementById('buyAmt').oninput = function(){
     const a = parseFloat(this.value)||0;
-    document.getElementById('buyPreview').textContent = a>0 ? `≈ ${(a/PRICES[sym]).toFixed(6)} ${sym}` : '';
+    document.getElementById('buyPreview').textContent = a>0 ? ` ${(a/PRICES[sym]).toFixed(6)} ${sym}` : '';
   };
 }
 function doBuy() {
@@ -1230,7 +938,7 @@ function openSell(sym) {
   document.getElementById('sellAmt').oninput = function(){
     const a = parseFloat(this.value)||0;
     const held = s.crypto[sym]||0;
-    document.getElementById('sellPreview').textContent = a>0 ? `Holdings: ${fmtUSD(held)} · Sell ${(a/PRICES[sym]).toFixed(6)} ${sym}` : '';
+    document.getElementById('sellPreview').textContent = a>0 ? `Holdings: ${fmtUSD(held)} . Sell ${(a/PRICES[sym]).toFixed(6)} ${sym}` : '';
   };
 }
 function doSell() {
@@ -1253,56 +961,6 @@ function openMore() { openSheet('sheetMore'); }
 /* ======================================
    CARD CONTROLS
 ====================================== */
-// ── CARD FLIP + PIN ──
-let cardFlipRequested = false;
-
-function handleCardFlip() {
-  const card = document.getElementById('dashCard');
-  const isFlipped = card.style.transform === 'rotateY(180deg)';
-  if (isFlipped) {
-    // Flip back - always allowed, re-lock
-    card.style.transform = '';
-    document.getElementById('cardBackLocked').style.display = 'flex';
-    document.getElementById('cardBackUnlocked').style.display = 'none';
-  } else {
-    // Ask for PIN before flipping
-    cardFlipRequested = true;
-    document.getElementById('cardPinInput').value = '';
-    document.getElementById('cardPinErr').style.display = 'none';
-    openSheet('sheetCardPin');
-    setTimeout(() => document.getElementById('cardPinInput').focus(), 300);
-  }
-}
-
-function verifyCardPin() {
-  const pin = document.getElementById('cardPinInput').value.trim();
-  if (pin === '111005376') {
-    document.getElementById('cardPinErr').style.display = 'none';
-    closeSheet('sheetCardPin');
-    // Flip and reveal
-    const card = document.getElementById('dashCard');
-    card.style.transform = 'rotateY(180deg)';
-    document.getElementById('cardBackLocked').style.display = 'none';
-    document.getElementById('cardBackUnlocked').style.display = 'block';
-    toast('Card details unlocked');
-  } else {
-    document.getElementById('cardPinErr').style.display = 'block';
-    document.getElementById('cardPinInput').value = '';
-    document.getElementById('cardPinInput').focus();
-  }
-}
-
-function cancelCardFlip() {
-  cardFlipRequested = false;
-  closeSheet('sheetCardPin');
-}
-
-// Allow Enter key on PIN input - attached inline since DOM is ready
-(function() {
-  var pinInput = document.getElementById('cardPinInput');
-  if (pinInput) pinInput.addEventListener('keydown', function(e) { if(e.key==='Enter') verifyCardPin(); });
-})();
-
 let frozen = false;
 function toggleFreeze() {
   frozen = !frozen;
@@ -1313,11 +971,11 @@ function toggleFreeze() {
   toast(frozen ? 'Card frozen' : 'Card unfrozen');
 }
 function copyCard() {
-  const txt = '4829 •••• •••• 7741 | Exp: 03/29 | CVV: 742';
+  const txt = '4829 ---- ---- 7741 | Exp: 03/29 | CVV: 742';
   if (navigator.clipboard) navigator.clipboard.writeText(txt);
   toast('Card details copied');
 }
-function openNewCard() { toast('New virtual card issued: 4829 •••• •••• 8834 · 24h'); }
+function openNewCard() { toast('New virtual card issued: 4829 ---- ---- 8834 . 24h'); }
 
 /* ======================================
    SHEET HELPERS
@@ -1333,6 +991,86 @@ document.querySelectorAll('.sheet-overlay').forEach(ov => {
   ov.addEventListener('click', function(e) { if(e.target===this) this.classList.remove('open'); });
 });
 
-/* ══════════════════════════════════════
+/* ======================================
    TOAST
-══════════════════════════════
+====================================== */
+let toastT;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+/* ======================================
+   AUTO-LOGIN + INIT
+====================================== */
+if (sessionStorage.getItem('wl_ok') === '1') showHome();
+// ---- CARD FLIP + PIN ----
+function handleCardFlip() {
+  var card = document.getElementById('dashCard');
+  var isFlipped = card.style.transform === 'rotateY(180deg)';
+  if (isFlipped) {
+    card.style.transform = '';
+    var bl = document.getElementById('cardBackLocked');
+    var bu = document.getElementById('cardBackUnlocked');
+    if(bl) bl.style.display = 'flex';
+    if(bu) bu.style.display = 'none';
+  } else {
+    var pi = document.getElementById('cardPinInput');
+    var pe = document.getElementById('cardPinErr');
+    if(pi) pi.value = '';
+    if(pe) pe.style.display = 'none';
+    openSheet('sheetCardPin');
+    setTimeout(function() { if(pi) pi.focus(); }, 300);
+  }
+}
+function verifyCardPin() {
+  var pi = document.getElementById('cardPinInput');
+  var pe = document.getElementById('cardPinErr');
+  if (!pi) return;
+  var pin = pi.value.trim();
+  if (pin === '111005376') {
+    if(pe) pe.style.display = 'none';
+    closeSheet('sheetCardPin');
+    var card = document.getElementById('dashCard');
+    card.style.transform = 'rotateY(180deg)';
+    var bl = document.getElementById('cardBackLocked');
+    var bu = document.getElementById('cardBackUnlocked');
+    if(bl) bl.style.display = 'none';
+    if(bu) bu.style.display = 'block';
+    toast('Card details unlocked');
+  } else {
+    if(pe) pe.style.display = 'block';
+    pi.value = '';
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var pi = document.getElementById('cardPinInput');
+  if (pi) pi.addEventListener('keydown', function(e) { if(e.key === 'Enter') verifyCardPin(); });
+});
+
+</script>
+
+<!-- CARD PIN MODAL -->
+<div class="sheet-overlay" id="sheetCardPin">
+  <div class="sheet" style="position:relative;text-align:center">
+    <div class="sheet-handle"></div>
+    <button class="sheet-close" onclick="closeSheet('sheetCardPin')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <div style="margin-bottom:1.2rem">
+      <div style="width:50px;height:50px;border-radius:50%;background:var(--red-dim);display:grid;place-items:center;margin:0 auto .8rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="width:22px;height:22px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div style="font-size:1rem;font-weight:700;margin-bottom:.3rem">Verify Identity</div>
+      <div style="font-size:.82rem;color:var(--txt2)">Enter your PIN to view card details</div>
+    </div>
+    <input id="cardPinInput" type="password" inputmode="numeric" maxlength="12" placeholder="Enter PIN"
+      style="width:100%;padding:.85rem 1rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--txt);font-size:1.1rem;letter-spacing:.2em;text-align:center;outline:none;margin-bottom:.8rem;display:block"/>
+    <div id="cardPinErr" style="font-size:.8rem;color:var(--red);margin-bottom:.8rem;display:none">Incorrect PIN. Try again.</div>
+    <button onclick="verifyCardPin()" style="width:100%;padding:.88rem;background:var(--red);color:#fff;border-radius:var(--r);font-weight:700;font-size:.92rem">Confirm</button>
+  </div>
+</div>
+
+</body>
+</html>
