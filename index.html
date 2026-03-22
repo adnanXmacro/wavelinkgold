@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>Wave LTD - Crypto Card &amp; Banking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#e8192c;--red-lt:#ff3344;--red-dim:rgba(232,25,44,.1);--red-dim2:rgba(232,25,44,.18);
+  --bg:#0a0a0a;--card:#141414;--card2:#1a1a1a;--border:#222;--border2:#2e2e2e;
+  --txt:#f2f2f2;--txt2:#888;--txt3:#444;
+  --green:#22c55e;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --r:14px;--tr:.2s ease
+}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:var(--font);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;background:none;font:inherit}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:none}
+.container{max-width:1180px;margin:0 auto;padding:0 1.5rem}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(10,10,10,.9);backdrop-filter:blur(18px);border-bottom:1px solid transparent;transition:border-color var(--tr)}
+.nav.scrolled{border-bottom-color:var(--border)}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo-ic{width:30px;height:30px;background:var(--red);border-radius:8px;display:grid;place-items:center}
+.nav-logo-nm{font-size:1rem;font-weight:700}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.85rem;font-weight:500;color:var(--txt2);transition:color var(--tr)}
+.nav-links a:hover{color:var(--txt)}
+.nav-right{display:flex;gap:.6rem}
+.btn-ghost{font-size:.82rem;font-weight:600;padding:.42rem 1.1rem;border:1px solid var(--border2);border-radius:50px;color:var(--txt2);transition:border-color var(--tr),color var(--tr)}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.btn-red{font-size:.82rem;font-weight:700;padding:.42rem 1.2rem;background:var(--red);color:#fff;border-radius:50px;box-shadow:0 2px 12px rgba(232,25,44,.3);transition:background var(--tr)}
+.btn-red:hover{background:var(--red-lt)}
+.nav-mob{display:none;width:34px;height:34px;background:var(--card);border-radius:8px;border:1px solid var(--border);align-items:center;justify-content:center}
+.nav-mob svg{width:18px;height:18px}
+@media(max-width:800px){.nav-links,.btn-ghost{display:none}.nav-mob{display:flex}}
+
+/* MOB MENU */
+.mob{display:none;position:fixed;inset:0;z-index:200;background:#0a0a0a;flex-direction:column;padding:5rem 2rem 2rem}
+.mob.open{display:flex}
+.mob a{font-size:1.3rem;font-weight:700;padding:.8rem 0;border-bottom:1px solid var(--border);color:var(--txt)}
+.mob-x{position:absolute;top:1rem;right:1rem;width:38px;height:38px;background:var(--card);border:1px solid var(--border);border-radius:50%;display:grid;place-items:center}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 1.5rem 2rem;position:relative;overflow:hidden}
+.hero-glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
+.g1{width:500px;height:500px;top:-150px;right:-100px;background:rgba(232,25,44,.07)}
+.g2{width:350px;height:350px;bottom:-100px;left:-80px;background:rgba(232,25,44,.04)}
+.hero-in{position:relative;z-index:1;max-width:1180px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+@media(max-width:800px){.hero-in{grid-template-columns:1fr;gap:2.5rem}}
+.hero-pill{display:inline-flex;align-items:center;gap:.5rem;background:var(--red-dim);border:1px solid var(--red-dim2);border-radius:50px;padding:.28rem .9rem;margin-bottom:1.4rem}
+.hero-pill-dot{width:5px;height:5px;border-radius:50%;background:var(--red);animation:pulse 2s infinite}
+.hero-pill span{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.hero-h1{font-size:clamp(2rem,5vw,3.8rem);font-weight:800;line-height:1.12;letter-spacing:-.03em;margin-bottom:1.1rem}
+.hero-h1 em{font-style:normal;color:var(--red)}
+.hero-p{font-size:1rem;color:var(--txt2);line-height:1.75;max-width:440px;margin-bottom:2rem}
+.hero-btns{display:flex;gap:.7rem;flex-wrap:wrap}
+.btn-red-lg{font-size:.92rem;font-weight:700;padding:.82rem 2.2rem;background:var(--red);color:#fff;border-radius:50px;display:flex;align-items:center;gap:.5rem;box-shadow:0 4px 22px rgba(232,25,44,.32);transition:background var(--tr),transform var(--tr)}
+.btn-red-lg:hover{background:var(--red-lt);transform:translateY(-1px)}
+.btn-ghost-lg{font-size:.92rem;font-weight:600;padding:.82rem 1.8rem;border:1px solid var(--border2);color:var(--txt2);border-radius:50px;transition:border-color var(--tr),color var(--tr)}
+.btn-ghost-lg:hover{border-color:var(--red);color:var(--red)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:2.2rem;flex-wrap:wrap}
+.hstat-n{font-size:1.5rem;font-weight:800;letter-spacing:-.03em}
+.hstat-n span{color:var(--red)}
+.hstat-l{font-size:.72rem;color:var(--txt3);margin-top:.1rem;font-weight:500}
+
+/* DEMO CARD */
+.hero-card-demo{width:100%;max-width:320px;margin:0 auto;animation:float 4s ease-in-out infinite}
+.demo-card{width:100%;aspect-ratio:1.586;border-radius:20px;background:#1c1c1c;position:relative;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.dc-sh{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.03) 50%,transparent 60%);background-size:200%;animation:shimmer 4s linear infinite}
+.dc-inner{position:relative;z-index:1;padding:1.5rem 1.6rem;height:100%;display:flex;flex-direction:column;justify-content:space-between}
+.dc-top{display:flex;justify-content:space-between;align-items:center}
+.dc-logo{display:flex;align-items:center;gap:.5rem}
+.dc-logo-ic{width:22px;height:22px;background:var(--red);border-radius:5px;display:grid;place-items:center}
+.dc-brand{font-size:.82rem;font-weight:700;color:rgba(255,255,255,.9)}
+.dc-visa{font-size:.95rem;font-weight:800;font-style:italic;color:rgba(255,255,255,.8)}
+.dc-num{font-size:.9rem;letter-spacing:.18em;color:rgba(255,255,255,.5);font-weight:500}
+.dc-bot{display:flex;justify-content:space-between}
+.dc-lbl{font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:2px}
+.dc-val{font-size:.7rem;font-weight:600;color:rgba(255,255,255,.7)}
+
+/* TICKER */
+.ticker{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.55rem 0;overflow:hidden}
+.ticker-tr{display:flex;gap:3rem;animation:ticker 28s linear infinite;white-space:nowrap}
+.ti{display:flex;align-items:center;gap:.55rem;flex-shrink:0;font-size:.78rem;color:var(--txt2)}
+.ti-logo{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:.58rem;font-weight:800;color:#fff;flex-shrink:0}
+.ti-sym{font-weight:700;color:var(--txt)}
+.up{color:var(--green)}.dn{color:var(--red)}
+
+/* SECTIONS */
+.sec-lbl{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.sec-h{font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:.8rem}
+.sec-p{font-size:.95rem;color:var(--txt2);max-width:460px;line-height:1.72;margin-bottom:2.2rem}
+
+/* FEATURES */
+#features{padding:5.5rem 0}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+@media(max-width:800px){.feat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.feat-grid{grid-template-columns:1fr}}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;transition:border-color var(--tr),transform var(--tr)}
+.feat:hover{border-color:rgba(232,25,44,.3);transform:translateY(-2px)}
+.feat-ico{width:40px;height:40px;border-radius:10px;background:var(--red-dim);display:grid;place-items:center;margin-bottom:1rem}
+.feat-ico svg{width:19px;height:19px;color:var(--red)}
+.feat h3{font-size:.92rem;font-weight:700;margin-bottom:.35rem}
+.feat p{font-size:.82rem;color:var(--txt2);line-height:1.65}
+
+/* SERVICES */
+#services{padding:5.5rem 0}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:2rem}
+@media(max-width:800px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.svc-grid{grid-template-columns:1fr}}
+.svc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;position:relative;overflow:hidden;transition:border-color var(--tr),transform var(--tr)}
+.svc:hover{border-color:rgba(232,25,44,.25);transform:translateY(-2px)}
+.svc::after{content:'';position:absolute;top:0;left:0;width:3px;bottom:0;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform var(--tr)}
+.svc:hover::after{transform:scaleY(1)}
+.svc-num{font-size:.65rem;font-weight:700;letter-spacing:.12em;color:var(--txt3);margin-bottom:.8rem}
+.svc h3{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
+.svc p{font-size:.82rem;color:var(--txt2);line-height:1.65}
+.svc-link{display:flex;align-items:center;gap:.3rem;margin-top:.9rem;font-size:.78rem;font-weight:600;color:var(--red)}
+
+/* RATES */
+#rates{padding:5.5rem 0}
+.rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:2rem}
+@media(max-width:800px){.rate-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.rate-grid{grid-template-columns:1fr}}
+.rate{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;transition:border-color var(--tr)}
+.rate:hover{border-color:rgba(232,25,44,.25)}
+.rate.hot{background:var(--red);border-color:var(--red)}
+.rate.hot *{color:#fff!important}
+.rate-prod{font-size:.78rem;font-weight:600;color:var(--txt2);margin-bottom:.4rem}
+.rate-val{font-size:2rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.3rem}
+.rate-desc{font-size:.76rem;color:var(--txt2);line-height:1.5;margin-bottom:.7rem}
+.rate-badge{display:inline-flex;align-items:center;font-size:.68rem;font-weight:700;padding:.18rem .65rem;border-radius:20px;background:rgba(34,197,94,.12);color:var(--green)}
+.rate-badge.ltd{background:rgba(245,158,11,.1);color:#f59e0b}
+
+/* TESTIMONIALS */
+#testimonials{padding:5.5rem 0}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:2rem}
+@media(max-width:800px){.test-grid{grid-template-columns:1fr}}
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem}
+.tcard-stars{display:flex;gap:2px;margin-bottom:.7rem}
+.tcard-stars svg{width:13px;height:13px;fill:var(--red)}
+.tcard-txt{font-size:.85rem;color:var(--txt2);line-height:1.72;font-style:italic;margin-bottom:1.1rem}
+.tcard-auth{display:flex;align-items:center;gap:.65rem}
+.tcard-av{width:32px;height:32px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0}
+.tcard-nm{font-size:.84rem;font-weight:600}
+.tcard-rl{font-size:.7rem;color:var(--txt3)}
+
+/* CTA */
+#cta{padding:5.5rem 0;background:var(--red);text-align:center;position:relative;overflow:hidden}
+.cta-gc{position:absolute;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.cgc1{width:500px;height:500px;top:-200px;right:-150px}
+.cgc2{width:350px;height:350px;bottom:-150px;left:-100px}
+#cta .sec-lbl{color:rgba(255,255,255,.7)}
+#cta .sec-h{color:#fff;margin:0 auto .8rem}
+#cta .sec-p{color:rgba(255,255,255,.72);text-align:center;margin:0 auto 2rem}
+.btn-wh{font-size:.92rem;font-weight:700;padding:.85rem 2.2rem;background:#fff;color:var(--red);border-radius:50px;display:inline-flex;align-items:center;gap:.5rem;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:transform var(--tr)}
+.btn-wh:hover{transform:translateY(-1px)}
+.btn-wh-out{font-size:.92rem;font-weight:600;padding:.85rem 2rem;border:1.5px solid rgba(255,255,255,.45);color:#fff;border-radius:50px;transition:background var(--tr)}
+.btn-wh-out:hover{background:rgba(255,255,255,.1)}
+
+/* FOOTER */
+footer{background:#050505;padding:4rem 0 2rem;border-top:1px solid var(--border)}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem}
+@media(max-width:800px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.foot-grid{grid-template-columns:1fr}}
+.foot-nm{font-size:.98rem;font-weight:700;margin-bottom:.7rem}
+.foot-desc{font-size:.82rem;color:var(--txt2);line-height:1.7;max-width:230px;margin-bottom:1.2rem}
+.foot-socs{display:flex;gap:.5rem}
+.foot-soc{width:30px;height:30px;border-radius:7px;background:var(--card);border:1px solid var(--border);display:grid;place-items:center;transition:background var(--tr)}
+.foot-soc:hover{background:var(--card2)}
+.foot-soc svg{width:13px;height:13px;color:var(--txt2)}
+.foot-col h5{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin-bottom:.9rem}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.foot-col ul a{font-size:.82rem;color:var(--txt2);transition:color var(--tr)}
+.foot-col ul a:hover{color:var(--txt)}
+.foot-bot{border-top:1px solid var(--border);padding-top:1.8rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.foot-copy{font-size:.75rem;color:var(--txt3)}
+.foot-leg{display:flex;gap:1.2rem}
+.foot-leg a{font-size:.75rem;color:var(--txt3);transition:color var(--tr)}
+.foot-leg a:hover{color:var(--txt2)}
+.fdic{font-size:.67rem;font-weight:600;padding:.22rem .65rem;background:var(--card);border:1px solid var(--border);border-radius:4px;color:var(--txt3);letter-spacing:.06em}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob" id="mob">
+  <button class="mob-x" onclick="document.getElementById('mob').classList.remove('open')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <a href="#features" onclick="document.getElementById('mob').classList.remove('open')">Features</a>
+  <a href="#services" onclick="document.getElementById('mob').classList.remove('open')">Services</a>
+  <a href="#rates" onclick="document.getElementById('mob').classList.remove('open')">Rates</a>
+  <a href="dashboard.html" style="color:var(--red);font-weight:700">Sign In</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-ic">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M1 8l2.5 5.5L6 9 8 12l2.5-4.5L13 12l2.5-5.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="nav-logo-nm">Wave LTD</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#rates">Rates</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="dashboard.html" class="btn-ghost">Sign In</a>
+    <a href="dashboard.html" class="btn-red">Get Started</a>
+  </div>
+  <button class="nav-mob" onclick="document.getElementById('mob').classList.add('open')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow g1"></div>
+  <div class="hero-glow g2"></div>
+  <div class="hero-in">
+    <div style="opacity:0;animation:fadeUp .7s .1s forwards">
+      <div class="hero-pill"><span class="hero-pill-dot"></span><span>Crypto-Powered Debit Card</span></div>
+      <h1 class="hero-h1">Your crypto,<br/>spendable <em>everywhere</em></h1>
+      <p class="hero-p">Turn BTC, ETH, USDT and 12+ coins into real spending power. Accepted at 130M+ merchants in 100+ countries.</p>
+      <div class="hero-btns">
+        <a href="dashboard.html" class="btn-red-lg">
+          Open Account
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#features" class="btn-ghost-lg">Learn More</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hstat-n">5M<span>+</span></div><div class="hstat-l">Global Users</div></div>
+        <div><div class="hstat-n">130M<span>+</span></div><div class="hstat-l">Merchants</div></div>
+        <div><div class="hstat-n">100<span>+</span></div><div class="hstat-l">Countries</div></div>
+      </div>
+    </div>
+    <!-- Generic demo card — no real user data shown publicly -->
+    <div style="opacity:0;animation:fadeUp .7s .25s forwards">
+      <div class="hero-card-demo">
+        <div class="demo-card">
+          <div class="dc-sh"></div>
+          <div class="dc-inner">
+            <div class="dc-top">
+              <div class="dc-logo">
+                <div class="dc-logo-ic">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M1 6l1.8 4L5 6.5l1 2 1.8-3.2L10 6.5l1.8-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="dc-brand">Wave LTD</span>
+              </div>
+              <span class="dc-visa">VISA</span>
+            </div>
+            <div>
+              <div class="dc-num">**** **** **** ****</div>
+            </div>
+            <div class="dc-bot">
+              <div><div class="dc-lbl">Card Holder</div><div class="dc-val">YOUR NAME</div></div>
+              <div style="text-align:right"><div class="dc-lbl">Valid Thru</div><div class="dc-val">MM/YY</div></div>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:.74rem;color:var(--txt3);margin-top:.75rem;font-weight:500">Sign in to access your personal card</p>
+      </div>
+    </div>
+  </div>
+  <!-- TICKER -->
+  <div class="ticker" style="margin-top:2.5rem">
+    <div class="ticker-tr" id="tickerTrack"></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="sec-lbl">Why Wave LTD</div>
+      <h2 class="sec-h" style="margin:0 auto .8rem">Everything in one card</h2>
+      <p class="sec-p" style="margin:0 auto 2.2rem">Built for people who live on crypto but spend in the real world.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div>
+        <h3>Instant Conversion</h3>
+        <p>Crypto converts at spot rate the moment you swipe. No pre-loading, no waiting.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>Global Acceptance</h3>
+        <p>Spend at 130M+ merchants and ATMs in 100+ countries worldwide.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h3>Bank-Grade Security</h3>
+        <p>256-bit encryption, biometric auth and real-time fraud detection built in.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Live Portfolio</h3>
+        <p>Track all holdings, income and expenses in real time from one dashboard.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Zero FX Markup</h3>
+        <p>Transparent 1% conversion fee. No hidden charges. Ever.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Virtual + Physical</h3>
+        <p>Instant virtual card on approval. Physical card shipped in 7 days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-lbl">Services</div>
+      <h2 class="sec-h">Full-spectrum crypto banking</h2>
+      <p class="sec-p">From everyday spending to institutional-grade wealth management.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal"><div class="svc-num">01</div><h3>Crypto Debit Cards</h3><p>Virtual and physical Visa cards backed by your crypto. Spend anywhere instantly.</p><div class="svc-link">Learn more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+      <div class="svc reveal"><div class="svc-num">02</div><h3>Crypto Savings</h3><p>Earn up to 8.5% APY on USDT. Fully liquid, fully insured.</p><div class="svc-link">Learn more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+      <div class="svc reveal"><div class="svc-num">03</div><h3>Instant Swaps</h3><p>Swap 12+ cryptocurrencies at live rates. Zero spread on first $10K monthly.</p><div class="svc-link">Learn more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+      <div class="svc reveal"><div class="svc-num">04</div><h3>Global Transfers</h3><p>Send to 180+ countries in seconds. Crypto rails, fiat delivery.</p><div class="svc-link">Learn more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+      <div class="svc reveal"><div class="svc-num">05</div><h3>Yield &amp; Staking</h3><p>Earn up to 12% APY through curated DeFi strategies, fully managed.</p><div class="svc-link">Learn more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+      <div class="svc reveal"><div class="svc-num">06</div><h3>Business Banking</h3><p>Multi-user accounts, crypto payroll, full API access and compliance tools.</p><div class="svc-link">Learn more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RATES -->
+<section id="rates">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="sec-lbl">Pricing</div>
+      <h2 class="sec-h" style="margin:0 auto .8rem">Transparent rates, no surprises</h2>
+      <p class="sec-p" style="margin:0 auto 2.2rem">No fine print. Every fee published and fixed.</p>
+    </div>
+    <div class="rate-grid reveal">
+      <div class="rate hot"><div class="rate-prod">USDT Savings APY</div><div class="rate-val">8.50%</div><div class="rate-desc">Fully liquid, FDIC-equivalent insured</div><span class="rate-badge">Live Now</span></div>
+      <div class="rate"><div class="rate-prod">BTC Yield Vault</div><div class="rate-val">5.75%</div><div class="rate-desc">Managed staking + DeFi, 0.5% mgmt fee</div><span class="rate-badge">Live Now</span></div>
+      <div class="rate"><div class="rate-prod">ETH Staking</div><div class="rate-val">4.20%</div><div class="rate-desc">Native validator stake, no fees</div><span class="rate-badge ltd">Limited Slots</span></div>
+      <div class="rate"><div class="rate-prod">Virtual Debit Card</div><div class="rate-val">Free</div><div class="rate-desc">Visa network, 1% FX fee only</div><span class="rate-badge">Live Now</span></div>
+      <div class="rate"><div class="rate-prod">Crypto-Backed Loan</div><div class="rate-val">6.99%</div><div class="rate-desc">No credit check, 1% origination</div><span class="rate-badge">Live Now</span></div>
+      <div class="rate"><div class="rate-prod">Global Transfer</div><div class="rate-val">$0</div><div class="rate-desc">Free up to $5K/month, 0.5% after</div><span class="rate-badge">Live Now</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="sec-lbl">Reviews</div>
+      <h2 class="sec-h" style="margin:0 auto .8rem">5M+ users, one card</h2>
+      <p class="sec-p" style="margin:0 auto 2.2rem">Trusted by crypto holders in 100+ countries.</p>
+    </div>
+    <div class="test-grid">
+      <div class="tcard reveal">
+        <div class="tcard-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="tcard-txt">"Wave LTD gave me a debit card that spends my BTC at any store. The real-time conversion is seamless and the app is genuinely beautiful."</p>
+        <div class="tcard-auth"><div class="tcard-av">M</div><div><div class="tcard-nm">Marcus Okafor</div><div class="tcard-rl">DeFi Investor, Lagos</div></div></div>
+      </div>
+      <div class="tcard reveal">
+        <div class="tcard-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="tcard-txt">"I pay contractors in 14 countries using crypto. Wave handles conversion and compliance automatically. Saved tens of thousands in wire fees."</p>
+        <div class="tcard-auth"><div class="tcard-av">S</div><div><div class="tcard-nm">Sophia Hartmann</div><div class="tcard-rl">CEO, Hartmann Remote</div></div></div>
+      </div>
+      <div class="tcard reveal">
+        <div class="tcard-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="tcard-txt">"8.5% yield on USDT with full liquidity. I have tried five crypto banks. Wave is the only one that feels like a real institution."</p>
+        <div class="tcard-auth"><div class="tcard-av">J</div><div><div class="tcard-nm">James Whitfield</div><div class="tcard-rl">Portfolio Manager, Dubai</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-gc cgc1"></div>
+  <div class="cta-gc cgc2"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="reveal">
+      <div class="sec-lbl">Get Started</div>
+      <h2 class="sec-h">Open your account in 5 minutes</h2>
+      <p class="sec-p">No branch visit. No paperwork. Just a smarter card built for the digital economy.</p>
+      <div style="display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap">
+        <a href="dashboard.html" class="btn-wh">Create Free Account</a>
+        <a href="#" class="btn-wh-out">Talk to Advisor</a>
+      </div>
+      <p style="margin-top:1rem;font-size:.75rem;color:rgba(255,255,255,.5)">FDIC-equivalent insurance &nbsp;·&nbsp; Zero hidden fees &nbsp;·&nbsp; Withdraw anytime</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-nm">Wave LTD</div>
+        <p class="foot-desc">A next-generation crypto bank bridging blockchain and everyday spending since 2018.</p>
+        <div class="foot-socs">
+          <a href="#" class="foot-soc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="foot-soc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></a>
+          <a href="#" class="foot-soc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col"><h5>Personal</h5><ul><li><a href="#">Virtual Card</a></li><li><a href="#">Savings</a></li><li><a href="#">Staking</a></li><li><a href="#">Loans</a></li><li><a href="#">Transfers</a></li></ul></div>
+      <div class="foot-col"><h5>Business</h5><ul><li><a href="#">Business Account</a></li><li><a href="#">Payroll</a></li><li><a href="#">API Access</a></li><li><a href="#">Treasury</a></li><li><a href="#">Compliance</a></li></ul></div>
+      <div class="foot-col"><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="#">Security</a></li><li><a href="#">Contact</a></li></ul></div>
+    </div>
+    <div class="foot-bot">
+      <p class="foot-copy">2026 Wave LTD Financial, Inc. All rights reserved.</p>
+      <div class="foot-leg"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+      <div class="fdic">FDIC INSURED &nbsp;·&nbsp; MSB LICENSED</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', function() {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+var ro = new IntersectionObserver(function(entries) {
+  entries.forEach(function(en, i) {
+    if (en.isIntersecting) {
+      setTimeout(function() { en.target.classList.add('visible'); }, i * 70);
+      ro.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
+
+var TICKERS = [
+  {sym:'BTC', p:'71,240', c:'+3.2', up:true,  bg:'#F7931A'},
+  {sym:'ETH', p:'2,686',  c:'+1.8', up:true,  bg:'#627EEA'},
+  {sym:'SOL', p:'170.25', c:'+5.1', up:true,  bg:'#9945FF'},
+  {sym:'USDT',p:'1.00',   c:'0.0',  up:true,  bg:'#26A17B'},
+  {sym:'BNB', p:'595',    c:'+2.3', up:true,  bg:'#F3BA2F'},
+  {sym:'XRP', p:'0.582',  c:'-0.9', up:false, bg:'#346AA9'},
+  {sym:'ADA', p:'0.445',  c:'+1.1', up:true,  bg:'#3CC8C8'},
+  {sym:'AVAX',p:'35.7',   c:'-1.2', up:false, bg:'#E84142'},
+];
+var tr = document.getElementById('tickerTrack');
+var h = TICKERS.map(function(x) {
+  return '<div class="ti"><div class="ti-logo" style="background:' + x.bg + '">' + x.sym.charAt(0) + '</div>' +
+    '<span class="ti-sym">' + x.sym + '</span>' +
+    '<span>$' + x.p + '</span>' +
+    '<span class="' + (x.up ? 'up' : 'dn') + '">' + (x.up ? '+' : '') + x.c + '%</span></div>';
+}).join('');
+tr.innerHTML = h + h;
+</script>
+</body>
+</html>
