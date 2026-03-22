@@ -484,18 +484,34 @@ button{cursor:pointer;border:none;background:none}
 </div>
 
 <!-- ================================
-     ASSETS SCREEN (Buy/Sell Crypto)
+     ASSETS SCREEN
 ================================ -->
 <div class="screen" id="scrAssets">
-  <div class="app-bar"><div class="ab-av" style="opacity:0"></div><span class="ab-title">Assets</span><div></div></div>
-  <div class="assets-page">
-    <div class="asset-bal-chip"><div class="abc-label">USD Balance</div><div class="abc-val" id="assetBalDisplay">$0.00</div></div>
-    <div class="asset-tabs">
-      <div class="asset-tab active" id="at-buy" onclick="setAssetTab('buy')">Buy Crypto</div>
-      <div class="asset-tab" id="at-sell" onclick="setAssetTab('sell')">Sell Crypto</div>
-    </div>
-    <div class="asset-list" id="assetList"></div>
+  <div class="app-bar">
+    <div class="ab-av" style="opacity:0"></div>
+    <span class="ab-title">Assets</span>
+    <div></div>
   </div>
+  <div style="padding:.2rem 1.2rem 1rem">
+    <!-- Balance -->
+    <div style="font-size:.85rem;color:var(--txt2);margin-bottom:.4rem">Available balance</div>
+    <div style="display:flex;align-items:baseline;gap:.45rem;margin-bottom:1.2rem">
+      <span style="font-size:2.8rem;font-weight:800;letter-spacing:-.04em;line-height:1" id="assetBalDisplay">0.00</span>
+      <span style="font-size:1rem;font-weight:700;color:var(--txt2)">USD</span>
+    </div>
+    <!-- Add funds / Earn / Credit -->
+    <div style="display:flex;gap:.6rem;margin-bottom:1.3rem">
+      <button onclick="openDeposit()" style="flex:1;padding:.72rem .5rem;background:#fff;border:none;border-radius:50px;font-size:.84rem;font-weight:700;color:#000">Add funds</button>
+      <button onclick="toast('Earn feature coming soon')" style="flex:1;padding:.72rem .5rem;background:var(--card2);border:none;border-radius:50px;font-size:.84rem;font-weight:600;color:var(--txt)">Earn</button>
+      <button onclick="toast('Credit feature coming soon')" style="flex:1;padding:.72rem .5rem;background:var(--card2);border:none;border-radius:50px;font-size:.84rem;font-weight:600;color:var(--txt)">Credit</button>
+    </div>
+    <!-- Crypto / Fiat tabs -->
+    <div style="display:flex;gap:1.5rem;border-bottom:1px solid var(--border);margin-bottom:0">
+      <div id="atab-crypto" onclick="setAssetTab('crypto')" style="font-size:.92rem;font-weight:700;color:var(--txt);padding-bottom:.65rem;border-bottom:2px solid var(--txt);cursor:pointer">Crypto</div>
+      <div id="atab-fiat" onclick="setAssetTab('fiat')" style="font-size:.92rem;font-weight:600;color:var(--txt2);padding-bottom:.65rem;border-bottom:2px solid transparent;cursor:pointer">Fiat</div>
+    </div>
+  </div>
+  <div id="assetList" style="padding:0 0 1rem"></div>
   <nav class="bot-nav">
     <div class="bn" onclick="goTab('home')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="bn-lbl">Home</span></div>
     <div class="bn" onclick="goTab('card')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="bn-lbl">Card</span></div>
@@ -662,6 +678,7 @@ const TABS = {
   send:    {scr:'scrSend',    active:'send'},
   assets:  {scr:'scrAssets',  active:'assets'},
   profile: {scr:'scrProfile', active:'profile'},
+  coin:    {scr:'scrCoin',    active:'assets'},
 };
 function goTab(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -730,41 +747,6 @@ function renderTx(s) {
   }).join('');
 }
 
-let assetMode = 'buy';
-function setAssetTab(mode) {
-  assetMode = mode;
-  document.getElementById('at-buy').classList.toggle('active', mode==='buy');
-  document.getElementById('at-sell').classList.toggle('active', mode==='sell');
-  const s = getStore();
-  renderAssets(s);
-}
-
-function renderAssets(s) {
-  const el = document.getElementById('assetList');
-  if (!el) return;
-  el.innerHTML = Object.entries(CRYPTO_META).map(([sym, m]) => {
-    const price = PRICES[sym];
-    const holdUSD = s.crypto[sym] || 0;
-    const holdAmt = holdUSD / price;
-    const change = {BTC:'+3.2%',ETH:'+1.8%',USDT:'0.0%',SOL:'+5.1%'}[sym];
-    const changeColor = sym==='USDT' ? 'var(--txt3)' : 'var(--green)';
-    const tradeBtn = assetMode === 'buy'
-      ? `<button class="btn-trade btn-buy" onclick="openBuy('${sym}')">Buy</button>`
-      : `<button class="btn-trade btn-sell" onclick="openSell('${sym}')"${holdUSD<=0?' disabled style="opacity:.35"':''}>Sell</button>`;
-    return `<div class="asset-item">
-      <div class="asset-logo" style="background:${m.color}">${m.letter}</div>
-      <div>
-        <div class="asset-name">${m.name}</div>
-        <div class="asset-sym">${sym} . ${holdAmt>0?holdAmt.toFixed(4)+' held':'No holdings'}</div>
-      </div>
-      <div class="asset-right">
-        <div class="asset-price">$${price.toLocaleString()}</div>
-        <div class="asset-change" style="color:${changeColor}">${change}</div>
-      </div>
-      ${tradeBtn}
-    </div>`;
-  }).join('');
-}
 
 /* ======================================
    ACTIONS
@@ -937,6 +919,119 @@ function toast(msg) {
    AUTO-LOGIN + INIT
 ====================================== */
 showHome();
+
+
+function renderAssets(s) {
+  var el = document.getElementById("assetList");
+  if (!el) return;
+  var abd = document.getElementById("assetBalDisplay");
+  if (abd) abd.textContent = Number(s.balance).toFixed(2);
+  if (assetTabMode === "fiat") {
+    el.innerHTML = "<div style='padding:0 1.2rem'>"
+      + "<div style='display:flex;align-items:center;gap:.85rem;padding:.88rem 0;border-bottom:1px solid var(--border)'>"
+      + "<div style='width:40px;height:40px;border-radius:50%;background:#0052b4;display:grid;place-items:center;font-size:.9rem;font-weight:800;color:#fff'>$</div>"
+      + "<div><div style='font-size:.9rem;font-weight:600'>USD</div><div style='font-size:.74rem;color:var(--txt3)'>US Dollar</div></div>"
+      + "<div style='margin-left:auto;text-align:right'><div style='font-size:.9rem;font-weight:700'>" + Number(s.balance).toFixed(2) + "</div></div>"
+      + "</div></div>";
+    return;
+  }
+  var CHANGES = {BTC:"+3.2%",ETH:"+1.8%",USDT:"0.0%",SOL:"+5.1%",USDC:"0.0%",BNB:"+2.3%"};
+  var rows = "";
+  Object.keys(CRYPTO_META).forEach(function(sym) {
+    var m = CRYPTO_META[sym];
+    var price = PRICES[sym];
+    var holdUSD = (s.crypto && s.crypto[sym]) ? s.crypto[sym] : 0;
+    var holdAmt = holdUSD / price;
+    var chg = CHANGES[sym] || "0.0%";
+    var chgColor = chg.charAt(0) === "+" ? "var(--green)" : (chg === "0.0%" ? "var(--txt3)" : "var(--red)");
+    rows += "<div onclick=\"openCoinDetail('" + sym + "')\""
+      + " style=\"display:flex;align-items:center;gap:.85rem;padding:.88rem 1.2rem;border-bottom:1px solid var(--border);cursor:pointer\">"
+      + "<div style=\"width:40px;height:40px;border-radius:50%;background:" + m.color + ";display:grid;place-items:center;font-size:.82rem;font-weight:800;color:#fff;flex-shrink:0\">" + m.letter + "</div>"
+      + "<div style=\"flex:1\"><div style=\"font-size:.9rem;font-weight:600\">" + sym + "</div>"
+      + "<div style=\"font-size:.74rem;color:var(--txt3)\">" + m.name + "</div></div>"
+      + "<div style=\"text-align:right\">"
+      + "<div style=\"font-size:.9rem;font-weight:700\">" + (holdAmt > 0 ? holdAmt.toFixed(4) : "0.00") + "</div>"
+      + "<div style=\"font-size:.72rem;color:" + chgColor + "\">" + chg + "</div>"
+      + "</div></div>";
+  });
+  el.innerHTML = rows;
+}
+
+var assetTabMode = 'crypto';
+function setAssetTab(mode) {
+  assetTabMode = mode;
+  var ct = document.getElementById('atab-crypto');
+  var ft = document.getElementById('atab-fiat');
+  if (ct) { ct.style.color = mode==='crypto'?'var(--txt)':'var(--txt2)'; ct.style.borderBottomColor = mode==='crypto'?'var(--txt)':'transparent'; }
+  if (ft) { ft.style.color = mode==='fiat'?'var(--txt)':'var(--txt2)'; ft.style.borderBottomColor = mode==='fiat'?'var(--txt)':'transparent'; }
+  renderAssets(getStore());
+}
+
+var currentCoin = 'BTC';
+function openCoinDetail(sym) {
+  currentCoin = sym;
+  var s = getStore();
+  var m = CRYPTO_META[sym];
+  var price = PRICES[sym];
+  var holdUSD = (s.crypto && s.crypto[sym]) ? s.crypto[sym] : 0;
+  var holdAmt = holdUSD / price;
+  var logoEl = document.getElementById('coinDetailLogo');
+  var symEl  = document.getElementById('coinDetailSym');
+  var amtEl  = document.getElementById('coinDetailAmt');
+  var usdEl  = document.getElementById('coinDetailUSD');
+  if (logoEl) { logoEl.style.background = m.color; logoEl.textContent = m.letter; }
+  if (symEl)  symEl.textContent = sym;
+  if (amtEl)  amtEl.textContent = holdAmt.toFixed(2);
+  if (usdEl)  usdEl.textContent = 'approx ' + holdUSD.toFixed(2) + ' USD';
+  var txs = s.transactions.filter(function(t) { return t.name && t.name.indexOf(sym) !== -1; });
+  var histEl = document.getElementById('coinHistory');
+  if (histEl) {
+    if (txs.length) {
+      histEl.innerHTML = txs.sort(function(a,b){return b.id-a.id;}).map(function(tx){
+        var col = tx.type==='income' ? 'var(--green)' : 'var(--txt2)';
+        return '<div style="padding:.7rem 0;border-bottom:1px solid var(--border)">'
+          + '<div style="font-size:.86rem;font-weight:600">' + tx.name + '</div>'
+          + '<div style="font-size:.7rem;color:var(--txt3)">' + tx.date + '</div>'
+          + '<div style="font-size:.86rem;font-weight:700;color:' + col + ';text-align:right">'
+          + (tx.type==='income'?'+':'-') + Number(tx.amount).toFixed(2) + ' USD</div>'
+          + '</div>';
+      }).join('');
+    } else {
+      histEl.innerHTML = '<div style="text-align:center;padding:3rem 0;color:var(--txt3);font-size:.88rem">No history found</div>';
+    }
+  }
+  document.querySelectorAll('.screen').forEach(function(sc){ sc.classList.remove('active'); });
+  var cs = document.getElementById('scrCoin');
+  if (cs) cs.classList.add('active');
+}
+function openCoinDeposit() {
+  var s = getStore();
+  document.getElementById('buyCoin').value = currentCoin;
+  document.getElementById('buySheetTitle').textContent = 'Add ' + currentCoin;
+  document.getElementById('buyAmt').value = '';
+  document.getElementById('buyPreview').textContent = '';
+  document.getElementById('buyBalDisplay').textContent = fmtUSD(s.balance);
+  openSheet('sheetBuy');
+  document.getElementById('buyAmt').oninput = function() {
+    var a = parseFloat(this.value) || 0;
+    document.getElementById('buyPreview').textContent = a > 0 ? 'approx ' + (a/PRICES[currentCoin]).toFixed(6) + ' ' + currentCoin : '';
+  };
+}
+function openCoinWithdraw() {
+  var s = getStore();
+  document.getElementById('sellCoin').value = currentCoin;
+  document.getElementById('sellSheetTitle').textContent = 'Withdraw ' + currentCoin;
+  document.getElementById('sellAmt').value = '';
+  document.getElementById('sellPreview').textContent = '';
+  openSheet('sheetSell');
+  document.getElementById('sellAmt').oninput = function() {
+    var a = parseFloat(this.value) || 0;
+    var held = (s.crypto && s.crypto[currentCoin]) ? s.crypto[currentCoin] : 0;
+    document.getElementById('sellPreview').textContent = a > 0 ? 'Holdings: ' + fmtUSD(held) : '';
+  };
+}
+function openCoinSend() { goTab('send'); }
+
 // ---- CARD FLIP + PIN ----
 function handleCardFlip() {
   var card = document.getElementById('dashCard');
@@ -982,6 +1077,63 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
+
+
+<!-- COIN DETAIL SCREEN -->
+<div class="screen" id="scrCoin">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;position:sticky;top:0;background:var(--bg);z-index:50">
+    <button onclick="goTab('assets')" style="width:34px;height:34px;display:grid;place-items:center">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div></div>
+    <div style="width:34px"></div>
+  </div>
+  <div style="padding:0 1.2rem 2rem;text-align:center">
+    <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.8rem">
+      <div id="coinDetailLogo" style="width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:.82rem;font-weight:800;color:#fff;background:#F7931A">B</div>
+      <span style="font-size:1.1rem;font-weight:700" id="coinDetailSym">BTC</span>
+    </div>
+    <div style="font-size:3rem;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:.4rem" id="coinDetailAmt">0.00</div>
+    <div style="font-size:.9rem;color:var(--txt2);margin-bottom:2rem" id="coinDetailUSD">approx 0.00 USD</div>
+    <div style="display:flex;justify-content:space-around;gap:.5rem;margin-bottom:2.5rem">
+      <div onclick="openCoinDeposit()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
+        <div style="width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center">
+          <svg style="width:22px;height:22px;color:#000;stroke-width:2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Add funds</span>
+      </div>
+      <div onclick="openCoinWithdraw()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--card2);display:grid;place-items:center">
+          <svg style="width:20px;height:20px;color:var(--txt)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+        </div>
+        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Withdraw</span>
+      </div>
+      <div onclick="openCoinSend()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--card2);display:grid;place-items:center">
+          <svg style="width:20px;height:20px;color:var(--txt)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </div>
+        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Send</span>
+      </div>
+      <div onclick="openSwap()" style="display:flex;flex-direction:column;align-items:center;gap:.45rem;cursor:pointer">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--card2);display:grid;place-items:center">
+          <svg style="width:20px;height:20px;color:var(--txt)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+        <span style="font-size:.76rem;font-weight:500;color:var(--txt2)">Swap</span>
+      </div>
+    </div>
+    <div style="text-align:left">
+      <div style="font-size:.95rem;font-weight:700;margin-bottom:1rem">History</div>
+      <div id="coinHistory"></div>
+    </div>
+  </div>
+  <nav class="bot-nav">
+    <div class="bn" onclick="goTab('home')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="bn-lbl">Home</span></div>
+    <div class="bn" onclick="goTab('card')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><span class="bn-lbl">Card</span></div>
+    <div class="bn" onclick="goTab('send')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><span class="bn-lbl">Send</span></div>
+    <div class="bn active"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><span class="bn-lbl">Assets</span></div>
+    <div class="bn" onclick="goTab('profile')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><span class="bn-lbl">Profile</span></div>
+  </nav>
+</div>
 
 <!-- CARD PIN MODAL -->
 <div class="sheet-overlay" id="sheetCardPin">
