@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
-<title>Wave LTD — Admin</title>
+<title>Wave LTD - Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -237,7 +237,7 @@ a{color:inherit;text-decoration:none}
       <div class="al-logo-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5l2.8 8L7.5 8 9 11.5 11.5 8l2.7 5.2L17 5" stroke="white" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <span class="al-logo-nm">Wave LTD</span>
     </div>
-    <div class="al-restricted"><span class="al-rd"></span><span>Admin · Restricted</span></div>
+    <div class="al-restricted"><span class="al-rd"></span><span>Admin . Restricted</span></div>
     <h2 class="al-title">Admin Sign In</h2>
     <p class="al-sub">Authorized personnel only. All actions are logged.</p>
     <div class="al-fld"><label>Username</label><div class="al-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><input type="text" id="au" placeholder="Admin username" autocomplete="off" autocapitalize="none"/></div></div>
@@ -275,7 +275,7 @@ a{color:inherit;text-decoration:none}
 
       <!-- OVERVIEW -->
       <div class="tp on" id="tp-overview">
-        <div class="at"><div><h1 class="at-title">Overview</h1><p class="at-sub" id="adminDate">Loading…</p></div><div class="at-right"><div class="live-chip"><span class="lc-dot"></span>Live</div><button class="btn-out" onclick="openUserDash()">View User Dashboard</button></div></div>
+        <div class="at"><div><h1 class="at-title">Overview</h1><p class="at-sub" id="adminDate">Loading...</p></div><div class="at-right"><div class="live-chip"><span class="lc-dot"></span>Live</div><button class="btn-out" onclick="openUserDash()">View User Dashboard</button></div></div>
         <div class="stats">
           <div class="sc r"><div class="sc-top"><div class="sc-ico r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div><div class="sc-lbl">USD Balance</div><div class="sc-val" id="ov-bal">$0.00</div></div>
           <div class="sc g"><div class="sc-top"><div class="sc-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div></div><div class="sc-lbl">Total Income</div><div class="sc-val" id="ov-in">$0.00</div></div>
@@ -296,7 +296,7 @@ a{color:inherit;text-decoration:none}
             <div class="be-fld"><div class="be-lbl">New Balance (USD)</div><input class="be-input" type="number" id="newBal" placeholder="e.g. 0.27" min="0" step="0.01"/></div>
             <button class="btn-set" onclick="setBalance()">Set Balance</button>
           </div>
-          <div class="be-note">Current balance: <strong id="curBal">$0.00</strong> — Reflects instantly on the user app.</div>
+          <div class="be-note">Current balance: <strong id="curBal">$0.00</strong> - Reflects instantly on the user app.</div>
         </div>
         <div class="panel">
           <div class="ph"><span class="ph-title">Quick Adjustments</span></div>
@@ -308,12 +308,12 @@ a{color:inherit;text-decoration:none}
             <button class="adj-btn adj-p" onclick="adj(500)">+ $500</button>
             <button class="adj-btn adj-p" onclick="adj(1000)">+ $1,000</button>
             <button class="adj-btn adj-p" onclick="adj(5000)">+ $5,000</button>
-            <button class="adj-btn adj-n" onclick="adj(-0.5)">− $0.50</button>
-            <button class="adj-btn adj-n" onclick="adj(-1)">− $1</button>
-            <button class="adj-btn adj-n" onclick="adj(-10)">− $10</button>
-            <button class="adj-btn adj-n" onclick="adj(-100)">− $100</button>
-            <button class="adj-btn adj-n" onclick="adj(-500)">− $500</button>
-            <button class="adj-btn adj-n" onclick="adj(-1000)">− $1,000</button>
+            <button class="adj-btn adj-n" onclick="adj(-0.5)"> $0.50</button>
+            <button class="adj-btn adj-n" onclick="adj(-1)"> $1</button>
+            <button class="adj-btn adj-n" onclick="adj(-10)"> $10</button>
+            <button class="adj-btn adj-n" onclick="adj(-100)"> $100</button>
+            <button class="adj-btn adj-n" onclick="adj(-500)"> $500</button>
+            <button class="adj-btn adj-n" onclick="adj(-1000)"> $1,000</button>
           </div>
         </div>
         <p style="font-size:.78rem;color:var(--txt3);padding:.5rem 0">Note: Crypto holdings (BTC, ETH, USDT, SOL) are managed by the user via buy/sell/swap on the app and cannot be edited from admin.</p>
@@ -357,6 +357,7 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <script>
+var txFil = 'all';
 /* == DATA STORE - same key as dashboard == */
 const KEY = 'waveltd_data';
 function getStore() {
