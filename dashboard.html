@@ -233,6 +233,12 @@ button{cursor:pointer;border:none;background:none}
    SEND TAB
 ================================== */
 .send-page{padding:1.2rem}
+
+/* Send method buttons */
+.send-method-btn{background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);padding:.85rem .6rem;font-size:.78rem;font-weight:600;color:var(--txt2);text-align:center;cursor:pointer;transition:all .18s}
+.send-method-btn:active{background:var(--card2)}
+.active-method{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+
 .send-bal-chip{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);padding:1.1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
 .sbc-label{font-size:.72rem;color:var(--txt2);font-weight:500;margin-bottom:.2rem}
 .sbc-val{font-size:1.1rem;font-weight:800;letter-spacing:-.02em}
@@ -485,19 +491,168 @@ button{cursor:pointer;border:none;background:none}
 <div class="screen" id="scrSend">
   <div class="app-bar"><div class="ab-av" style="opacity:0"></div><span class="ab-title">Send</span><div></div></div>
   <div class="send-page">
-    <div class="send-bal-chip"><div><div class="sbc-label">Available Balance</div><div class="sbc-val" id="sendBalDisplay">$0.00</div></div><div style="font-size:.78rem;font-weight:600;color:var(--txt2)">USD</div></div>
-    <p style="font-size:.8rem;color:var(--txt2);margin-bottom:1rem;font-weight:500">Quick Send</p>
-    <div class="send-contacts">
-      <div class="contact" onclick="prefillSend('Marcus O.','marcus[at]waveltd.com')"><div class="contact-av" style="background:#F7931A">M</div><div><div class="contact-name">Marcus O.</div><div class="contact-addr">marcus[at]waveltd.com</div></div><div class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-      <div class="contact" onclick="prefillSend('Sophia H.','sophia[at]waveltd.com')"><div class="contact-av" style="background:#627EEA">S</div><div><div class="contact-name">Sophia H.</div><div class="contact-addr">sophia[at]waveltd.com</div></div><div class="contact-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+
+    <!-- Balance chip -->
+    <div class="send-bal-chip">
+      <div><div class="sbc-label">Available Balance</div><div class="sbc-val" id="sendBalDisplay">$0.00</div></div>
+      <div style="font-size:.78rem;font-weight:600;color:var(--txt2)">USD</div>
     </div>
-    <div class="send-form">
-      <h4>Send Money</h4>
-      <div class="sf-row"><label>Recipient</label><input id="sendTo" type="text" placeholder="Username or wallet address"/></div>
-      <div class="sf-row"><label>Amount (USD)</label><input id="sendAmt" type="number" placeholder="0.00" min="0.01" step="0.01"/></div>
-      <div class="sf-row"><label>Note (optional)</label><input id="sendNote" type="text" placeholder="What's it for?"/></div>
-      <button class="btn-send-now" onclick="doSend()">Send Now</button>
+
+    <!-- Method selector -->
+    <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);margin-bottom:.7rem">Send via</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:1.4rem">
+      <div onclick="setSendMethod('bank')" id="sm-bank" class="send-method-btn active-method">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;display:block;margin:0 auto .4rem"><rect x="3" y="10" width="18" height="11" rx="1"/><path d="M12 3L2 10h20L12 3z"/><line x1="7" y1="10" x2="7" y2="21"/><line x1="12" y1="10" x2="12" y2="21"/><line x1="17" y1="10" x2="17" y2="21"/></svg>
+        Bank Transfer
+      </div>
+      <div onclick="setSendMethod('trust')" id="sm-trust" class="send-method-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;display:block;margin:0 auto .4rem"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Trust Wallet
+      </div>
+      <div onclick="setSendMethod('wire')" id="sm-wire" class="send-method-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;display:block;margin:0 auto .4rem"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        Wire Transfer
+      </div>
+      <div onclick="setSendMethod('mobile')" id="sm-mobile" class="send-method-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;display:block;margin:0 auto .4rem"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        Mobile Banking
+      </div>
     </div>
+
+    <!-- BANK TRANSFER form -->
+    <div id="form-bank">
+      <div class="sf-row"><label>Account Holder Name</label><input id="bankName" type="text" placeholder="Full name on account"/></div>
+      <div class="sf-row"><label>Bank Name</label><input id="bankBankName" type="text" placeholder="e.g. Chase, HSBC, Barclays"/></div>
+      <div class="sf-row"><label>Account Number / IBAN</label><input id="bankAccNum" type="text" placeholder="Account number or IBAN"/></div>
+      <div class="sf-row"><label>Routing / SWIFT / BIC</label><input id="bankRouting" type="text" placeholder="Routing or SWIFT code"/></div>
+      <div class="sf-row"><label>Amount (USD)</label><input id="bankAmt" type="number" placeholder="0.00" min="0.01" step="0.01"/></div>
+      <div style="font-size:.76rem;color:var(--txt2);padding:.6rem .85rem;background:var(--card2);border-radius:var(--r);margin-bottom:1rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;display:inline;margin-right:.3rem"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Processing time: 1-3 business days &nbsp;|&nbsp; Fee: <strong>$0.30</strong>
+      </div>
+      <button class="btn-send-now" onclick="doSendBank()">Send via Bank</button>
+    </div>
+
+    <!-- TRUST WALLET form -->
+    <div id="form-trust" style="display:none">
+      <div class="sf-row"><label>Wallet Address</label><input id="trustAddr" type="text" placeholder="0x... or wallet address"/></div>
+      <div class="sf-row"><label>Network</label>
+        <select id="trustNetwork" style="padding:.75rem .9rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--txt);font-size:.9rem;outline:none">
+          <option>Ethereum (ERC-20)</option>
+          <option>BNB Smart Chain (BEP-20)</option>
+          <option>Solana</option>
+          <option>Tron (TRC-20)</option>
+          <option>Polygon</option>
+        </select>
+      </div>
+      <div class="sf-row"><label>Amount (USD)</label><input id="trustAmt" type="number" placeholder="0.00" min="0.01" step="0.01"/></div>
+      <div style="font-size:.76rem;color:var(--txt2);padding:.6rem .85rem;background:var(--card2);border-radius:var(--r);margin-bottom:1rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;display:inline;margin-right:.3rem"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Instant delivery &nbsp;|&nbsp; Fee: <strong>$0.30</strong>
+      </div>
+      <button class="btn-send-now" onclick="doSendTrust()">Send to Trust Wallet</button>
+    </div>
+
+    <!-- WIRE TRANSFER form -->
+    <div id="form-wire" style="display:none">
+      <div class="sf-row"><label>Beneficiary Name</label><input id="wireName" type="text" placeholder="Full legal name"/></div>
+      <div class="sf-row"><label>Bank Name</label><input id="wireBankName" type="text" placeholder="Receiving bank name"/></div>
+      <div class="sf-row"><label>SWIFT / BIC Code</label><input id="wireSwift" type="text" placeholder="SWIFT or BIC code"/></div>
+      <div class="sf-row"><label>IBAN / Account Number</label><input id="wireIban" type="text" placeholder="IBAN or account number"/></div>
+      <div class="sf-row"><label>Bank Country</label><input id="wireCountry" type="text" placeholder="e.g. United States"/></div>
+      <div class="sf-row"><label>Amount (USD)</label><input id="wireAmt" type="number" placeholder="0.00" min="0.01" step="0.01"/></div>
+      <div style="font-size:.76rem;color:var(--txt2);padding:.6rem .85rem;background:var(--card2);border-radius:var(--r);margin-bottom:1rem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;display:inline;margin-right:.3rem"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Processing time: 2-5 business days &nbsp;|&nbsp; Fee: <strong>$0.30</strong>
+      </div>
+      <button class="btn-send-now" onclick="doSendWire()">Send Wire Transfer</button>
+    </div>
+
+    <!-- MOBILE BANKING menu -->
+    <div id="form-mobile" style="display:none">
+      <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);margin-bottom:.7rem">Choose service</p>
+      <div style="display:flex;flex-direction:column;gap:.55rem;margin-bottom:1rem">
+        <div onclick="setMobileService('bkash')" id="ms-bkash"
+          style="display:flex;align-items:center;gap:.9rem;padding:.9rem 1rem;background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);cursor:pointer;transition:border-color .18s">
+          <div style="width:40px;height:40px;border-radius:10px;background:#E2136E;display:grid;place-items:center;flex-shrink:0;font-size:.7rem;font-weight:800;color:#fff">bK</div>
+          <div><div style="font-size:.9rem;font-weight:700">bKash</div><div style="font-size:.73rem;color:var(--txt3)">Bangladesh mobile banking</div></div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;color:var(--txt3);margin-left:auto"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div onclick="setMobileService('nagad')" id="ms-nagad"
+          style="display:flex;align-items:center;gap:.9rem;padding:.9rem 1rem;background:var(--card);border:1.5px solid var(--border2);border-radius:var(--r);cursor:pointer;transition:border-color .18s">
+          <div style="width:40px;height:40px;border-radius:10px;background:#F7941D;display:grid;place-items:center;flex-shrink:0;font-size:.7rem;font-weight:800;color:#fff">NG</div>
+          <div><div style="font-size:.9rem;font-weight:700">Nagad</div><div style="font-size:.73rem;color:var(--txt3)">Bangladesh mobile banking</div></div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;color:var(--txt3);margin-left:auto"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- BKASH form -->
+    <div id="form-bkash" style="display:none">
+      <div style="display:flex;align-items:center;gap:.8rem;padding:.75rem 1rem;background:rgba(226,19,110,.1);border:1px solid rgba(226,19,110,.25);border-radius:var(--r);margin-bottom:1rem">
+        <div style="width:34px;height:34px;border-radius:8px;background:#E2136E;display:grid;place-items:center;font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0">bK</div>
+        <div>
+          <div style="font-size:.88rem;font-weight:700">bKash Transfer</div>
+          <div style="font-size:.72rem;color:var(--txt2)">Instant &nbsp;|&nbsp; 1 USD = 123.34 BDT &nbsp;|&nbsp; Fee: $0.30</div>
+        </div>
+        <button onclick="setMobileService('')" style="margin-left:auto;font-size:.7rem;color:var(--txt3);padding:.25rem .6rem;background:var(--card2);border-radius:20px;border:1px solid var(--border2)">Change</button>
+      </div>
+      <div class="sf-row">
+        <label>bKash Account Number</label>
+        <div style="position:relative;display:flex;align-items:center">
+          <span style="position:absolute;left:.85rem;font-size:.9rem;font-weight:600;color:var(--txt2);pointer-events:none">+880</span>
+          <input id="bkashNum" type="tel" maxlength="10" placeholder="1XXXXXXXXX"
+            style="width:100%;padding:.78rem .9rem .78rem 3.6rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--txt);font-size:.92rem;outline:none"/>
+        </div>
+        <div style="font-size:.7rem;color:var(--txt3);margin-top:.3rem">Enter 10-digit number after +880</div>
+      </div>
+      <div class="sf-row">
+        <label>Amount (USD)</label>
+        <input id="bkashAmt" type="number" placeholder="0.00" min="0.01" step="0.01" oninput="updateBkashPreview()"
+          style="width:100%;padding:.78rem .9rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--txt);font-size:.92rem;outline:none"/>
+      </div>
+      <div id="bkashPreview" style="font-size:.82rem;color:var(--txt2);padding:.6rem .9rem;background:var(--card2);border-radius:var(--r);margin-bottom:.9rem;display:none">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span>Amount</span><span id="bkashPreviewAmt">--</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span>BDT equivalent</span><span id="bkashPreviewBDT" style="color:var(--green)">--</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span>Transaction fee</span><span style="color:var(--amber)">$0.30</span></div>
+        <div style="border-top:1px solid var(--border);padding-top:.3rem;display:flex;justify-content:space-between;font-weight:700"><span>Total deducted</span><span id="bkashPreviewTotal" style="color:var(--red)">--</span></div>
+      </div>
+      <button class="btn-send-now" onclick="doSendBkash()" style="background:#E2136E;box-shadow:0 3px 14px rgba(226,19,110,.3)">Send via bKash</button>
+    </div>
+
+    <!-- NAGAD form -->
+    <div id="form-nagad" style="display:none">
+      <div style="display:flex;align-items:center;gap:.8rem;padding:.75rem 1rem;background:rgba(247,148,29,.1);border:1px solid rgba(247,148,29,.25);border-radius:var(--r);margin-bottom:1rem">
+        <div style="width:34px;height:34px;border-radius:8px;background:#F7941D;display:grid;place-items:center;font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0">NG</div>
+        <div>
+          <div style="font-size:.88rem;font-weight:700">Nagad Transfer</div>
+          <div style="font-size:.72rem;color:var(--txt2)">Instant &nbsp;|&nbsp; 1 USD = 123.34 BDT &nbsp;|&nbsp; Fee: $0.30</div>
+        </div>
+        <button onclick="setMobileService('')" style="margin-left:auto;font-size:.7rem;color:var(--txt3);padding:.25rem .6rem;background:var(--card2);border-radius:20px;border:1px solid var(--border2)">Change</button>
+      </div>
+      <div class="sf-row">
+        <label>Nagad Account Number</label>
+        <div style="position:relative;display:flex;align-items:center">
+          <span style="position:absolute;left:.85rem;font-size:.9rem;font-weight:600;color:var(--txt2);pointer-events:none">+880</span>
+          <input id="nagadNum" type="tel" maxlength="10" placeholder="1XXXXXXXXX"
+            style="width:100%;padding:.78rem .9rem .78rem 3.6rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--txt);font-size:.92rem;outline:none"/>
+        </div>
+        <div style="font-size:.7rem;color:var(--txt3);margin-top:.3rem">Enter 10-digit number after +880</div>
+      </div>
+      <div class="sf-row">
+        <label>Amount (USD)</label>
+        <input id="nagadAmt" type="number" placeholder="0.00" min="0.01" step="0.01" oninput="updateNagadPreview()"
+          style="width:100%;padding:.78rem .9rem;background:var(--card2);border:1.5px solid var(--border2);border-radius:var(--r);color:var(--txt);font-size:.92rem;outline:none"/>
+      </div>
+      <div id="nagadPreview" style="font-size:.82rem;color:var(--txt2);padding:.6rem .9rem;background:var(--card2);border-radius:var(--r);margin-bottom:.9rem;display:none">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span>Amount</span><span id="nagadPreviewAmt">--</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span>BDT equivalent</span><span id="nagadPreviewBDT" style="color:var(--green)">--</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span>Transaction fee</span><span style="color:var(--amber)">$0.30</span></div>
+        <div style="border-top:1px solid var(--border);padding-top:.3rem;display:flex;justify-content:space-between;font-weight:700"><span>Total deducted</span><span id="nagadPreviewTotal" style="color:var(--red)">--</span></div>
+      </div>
+      <button class="btn-send-now" onclick="doSendNagad()" style="background:#F7941D;box-shadow:0 3px 14px rgba(247,148,29,.3)">Send via Nagad</button>
+    </div>
+
   </div>
   <nav class="bot-nav">
     <div class="bn" onclick="goTab('home')"><div class="bn-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="bn-lbl">Home</span></div>
@@ -831,22 +986,136 @@ function doDeposit() {
   toast('Deposited ' + fmtUSD(amt) + ' successfully');
 }
 
-// SEND
-function prefillSend(name, addr) { document.getElementById('sendTo').value = addr; document.getElementById('sendAmt').focus(); }
-function doSend() {
-  const to = document.getElementById('sendTo').value.trim();
-  const amt = parseFloat(document.getElementById('sendAmt').value);
-  const note = document.getElementById('sendNote').value.trim();
-  if (!to) { toast('Enter recipient address'); return; }
-  if (!amt || amt <= 0) { toast('Enter a valid amount'); return; }
-  const s = getStore();
-  if (s.balance < amt) { toast('Insufficient balance'); return; }
-  s.balance = +(s.balance - amt).toFixed(2);
-  s.transactions.push({id:nextId(s),type:'expense',name:'Send to '+to,date:nowStr(),amount:amt,note:note||'Transfer',status:'completed'});
-  save(s);
-  document.getElementById('sendTo').value=''; document.getElementById('sendAmt').value=''; document.getElementById('sendNote').value='';
-  renderAll(); toast('Sent ' + fmtUSD(amt) + ' to ' + to);
+// ---- SEND ROUTING ----
+var BDT_RATE = 123.34;
+var SEND_FEE = 0.30;
+
+function setSendMethod(method) {
+  var methods = ['bank','trust','wire','mobile'];
+  methods.forEach(function(m) {
+    var btn = document.getElementById('sm-' + m);
+    var form = document.getElementById('form-' + m);
+    if (btn) { btn.className = 'send-method-btn' + (m === method ? ' active-method' : ''); }
+    if (form) { form.style.display = m === method ? 'block' : 'none'; }
+  });
+  // hide sub-forms when switching
+  ['bkash','nagad'].forEach(function(s) {
+    var f = document.getElementById('form-' + s);
+    if (f) f.style.display = 'none';
+  });
 }
+
+function setMobileService(service) {
+  var services = ['bkash','nagad'];
+  services.forEach(function(s) {
+    var ms = document.getElementById('ms-' + s);
+    var f  = document.getElementById('form-' + s);
+    if (ms) ms.style.borderColor = s === service ? 'var(--red)' : 'var(--border2)';
+    if (f)  f.style.display = s === service ? 'block' : 'none';
+  });
+}
+
+function updateBkashPreview() {
+  var amt = parseFloat(document.getElementById('bkashAmt').value) || 0;
+  var prev = document.getElementById('bkashPreview');
+  if (amt > 0) {
+    prev.style.display = 'block';
+    document.getElementById('bkashPreviewAmt').textContent  = fmtUSD(amt);
+    document.getElementById('bkashPreviewBDT').textContent  = (amt * BDT_RATE).toFixed(2) + ' BDT';
+    document.getElementById('bkashPreviewTotal').textContent = fmtUSD(amt + SEND_FEE);
+  } else {
+    prev.style.display = 'none';
+  }
+}
+
+function updateNagadPreview() {
+  var amt = parseFloat(document.getElementById('nagadAmt').value) || 0;
+  var prev = document.getElementById('nagadPreview');
+  if (amt > 0) {
+    prev.style.display = 'block';
+    document.getElementById('nagadPreviewAmt').textContent  = fmtUSD(amt);
+    document.getElementById('nagadPreviewBDT').textContent  = (amt * BDT_RATE).toFixed(2) + ' BDT';
+    document.getElementById('nagadPreviewTotal').textContent = fmtUSD(amt + SEND_FEE);
+  } else {
+    prev.style.display = 'none';
+  }
+}
+
+function deductAndRecord(amt, label, note) {
+  var total = +(amt + SEND_FEE).toFixed(2);
+  var s = getStore();
+  if (s.balance < total) { toast('Insufficient balance (need ' + fmtUSD(total) + ' inc. fee)'); return false; }
+  s.balance = +(s.balance - total).toFixed(2);
+  s.transactions.push({id:nextId(s),type:'expense',name:label,date:nowStr(),amount:total,note:note,status:'completed'});
+  save(s); renderAll();
+  return true;
+}
+
+function doSendBank() {
+  var name = document.getElementById('bankName').value.trim();
+  var acc  = document.getElementById('bankAccNum').value.trim();
+  var amt  = parseFloat(document.getElementById('bankAmt').value);
+  if (!name || !acc) { toast('Fill in all bank details'); return; }
+  if (!amt || amt <= 0) { toast('Enter a valid amount'); return; }
+  if (deductAndRecord(amt, 'Bank Transfer', 'To: ' + name)) {
+    document.getElementById('bankAmt').value = '';
+    toast('Bank transfer of ' + fmtUSD(amt) + ' initiated');
+  }
+}
+
+function doSendTrust() {
+  var addr = document.getElementById('trustAddr').value.trim();
+  var amt  = parseFloat(document.getElementById('trustAmt').value);
+  if (!addr) { toast('Enter a wallet address'); return; }
+  if (!amt || amt <= 0) { toast('Enter a valid amount'); return; }
+  if (deductAndRecord(amt, 'Trust Wallet', addr.slice(0,12) + '...')) {
+    document.getElementById('trustAmt').value = '';
+    toast('Sent ' + fmtUSD(amt) + ' to Trust Wallet');
+  }
+}
+
+function doSendWire() {
+  var name  = document.getElementById('wireName').value.trim();
+  var swift = document.getElementById('wireSwift').value.trim();
+  var amt   = parseFloat(document.getElementById('wireAmt').value);
+  if (!name || !swift) { toast('Fill in all wire details'); return; }
+  if (!amt || amt <= 0) { toast('Enter a valid amount'); return; }
+  if (deductAndRecord(amt, 'Wire Transfer', 'To: ' + name)) {
+    document.getElementById('wireAmt').value = '';
+    toast('Wire transfer of ' + fmtUSD(amt) + ' initiated');
+  }
+}
+
+function doSendBkash() {
+  var num = document.getElementById('bkashNum').value.trim();
+  var amt = parseFloat(document.getElementById('bkashAmt').value);
+  if (!num || num.length !== 10) { toast('Enter valid 10-digit bKash number'); return; }
+  if (!amt || amt <= 0) { toast('Enter a valid amount'); return; }
+  var bdt = (amt * BDT_RATE).toFixed(2);
+  if (deductAndRecord(amt, 'bKash Send', '+880' + num + ' | ' + bdt + ' BDT')) {
+    document.getElementById('bkashNum').value = '';
+    document.getElementById('bkashAmt').value = '';
+    document.getElementById('bkashPreview').style.display = 'none';
+    toast('Sent ' + bdt + ' BDT to +880' + num);
+  }
+}
+
+function doSendNagad() {
+  var num = document.getElementById('nagadNum').value.trim();
+  var amt = parseFloat(document.getElementById('nagadAmt').value);
+  if (!num || num.length !== 10) { toast('Enter valid 10-digit Nagad number'); return; }
+  if (!amt || amt <= 0) { toast('Enter a valid amount'); return; }
+  var bdt = (amt * BDT_RATE).toFixed(2);
+  if (deductAndRecord(amt, 'Nagad Send', '+880' + num + ' | ' + bdt + ' BDT')) {
+    document.getElementById('nagadNum').value = '';
+    document.getElementById('nagadAmt').value = '';
+    document.getElementById('nagadPreview').style.display = 'none';
+    toast('Sent ' + bdt + ' BDT to +880' + num);
+  }
+}
+
+function prefillSend(name, addr) {}
+function doSend() { toast('Choose a send method above'); }
 
 // SWAP
 function openSwap() { openSheet('sheetSwap'); document.getElementById('swapAmt').value=''; }
